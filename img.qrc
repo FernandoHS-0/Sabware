@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/imagenes">
+        <file>img/fondoLogin.jpg</file>
+        <file>img/Logo.png</file>
+        <file>img/LogoFaded.png</file>
+        <file>img/logOff.png</file>
+        <file>img/usuario.png</file>
+        <file>img/asignarZona.png</file>
+    </qresource>
+</RCC>
