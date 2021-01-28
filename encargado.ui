@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Encargado</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="img.qrc">
+    <normaloff>:/imagenes/img/Logo.png</normaloff>:/imagenes/img/Logo.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">#Encargado{
@@ -98,7 +102,8 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 14pt &quot;HelvLight&quot;;</string>
+     <string notr="true">font: 20pt &quot;HelvLight&quot;;
+color: #F29F05;</string>
     </property>
     <property name="text">
      <string/>
@@ -128,6 +133,8 @@
    <widget class="QWidget" name="page_2"/>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="img.qrc"/>
+ </resources>
  <connections/>
 </ui>

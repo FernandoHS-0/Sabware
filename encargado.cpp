@@ -22,3 +22,8 @@ void Encargado::reloj(){
     QString horaTexto = hora.toString("hh:mm");
     ui->relojD->setText(horaTexto);
 }
+
+void Encargado::on_btnSalir_clicked()
+{
+    this->close();
+}

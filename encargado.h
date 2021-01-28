@@ -18,6 +18,9 @@ public:
 public slots:
     void reloj();
 
+private slots:
+    void on_btnSalir_clicked();
+
 private:
     Ui::Encargado *ui;
     QTimer *timer;

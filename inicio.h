@@ -1,7 +1,11 @@
 #ifndef INICIO_H
 #define INICIO_H
 
+#include <QSql>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QMainWindow>
+#include "encargado.h"
 
 namespace Ui {
 class Inicio;
@@ -20,6 +24,8 @@ private slots:
 
 private:
     Ui::Inicio *ui;
+    QSqlDatabase conexion;
+    Encargado *enc;
 };
 
 #endif // INICIO_H

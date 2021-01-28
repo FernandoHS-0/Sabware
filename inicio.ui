@@ -64,7 +64,7 @@
       <rect>
        <x>40</x>
        <y>237</y>
-       <width>101</width>
+       <width>151</width>
        <height>31</height>
       </rect>
      </property>
@@ -76,10 +76,10 @@
 }</string>
      </property>
      <property name="text">
-      <string>Usuario:</string>
+      <string>No. usuario:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="txtUsuairo">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -92,6 +92,7 @@
       <string notr="true">QLineEdit{
 	border-right: 2px solid #D96704;
 	border-bottom: 2px solid #D96704;
+	font: 12pt &quot;HelvLight&quot;;
 }
 
 QLineEdit:Hover{
@@ -100,7 +101,7 @@ QLineEdit:Hover{
 }</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="txtPass">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -119,6 +120,9 @@ QLineEdit:Hover{
 	border-right: 2px solid #F29F05;
 	border-bottom: 2px solid #F29F05;
 }</string>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">
