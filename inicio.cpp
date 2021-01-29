@@ -27,7 +27,7 @@ void Inicio::on_pushButton_2_clicked()
     if(log.exec()){
         log.next();
         if(log.value(0).toInt() == usuario && log.value(1).toString() == contra){
-            enc = new Encargado();
+            enc = new Encargado;
             enc->show();
         }
     }else {

@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QSql>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 namespace Ui {
 class Encargado;
@@ -21,9 +24,12 @@ public slots:
 private slots:
     void on_btnSalir_clicked();
 
+    void on_btnGuardar_clicked();
+
 private:
     Ui::Encargado *ui;
     QTimer *timer;
+    QSqlDatabase dbconexion;
 };
 
 #endif // ENCARGADO_H
