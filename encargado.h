@@ -26,6 +26,10 @@ private slots:
 
     void on_btnGuardar_clicked();
 
+    void on_btnGestionUsr_clicked();
+
+    void on_btnAsigZ_clicked();
+
 private:
     Ui::Encargado *ui;
     QTimer *timer;

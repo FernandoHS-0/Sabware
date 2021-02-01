@@ -259,7 +259,7 @@ color: #D96704;</string>
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="page_2"/>
+   <widget class="QWidget" name="pagina2"/>
   </widget>
  </widget>
  <resources>

@@ -26,15 +26,18 @@ CONFIG += c++11
 
 SOURCES += \
         encargado.cpp \
+        gerente.cpp \
         main.cpp \
         inicio.cpp
 
 HEADERS += \
         encargado.h \
+        gerente.h \
         inicio.h
 
 FORMS += \
         encargado.ui \
+        gerente.ui \
         inicio.ui
 
 # Default rules for deployment.

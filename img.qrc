@@ -6,5 +6,6 @@
         <file>img/logOff.png</file>
         <file>img/usuario.png</file>
         <file>img/asignarZona.png</file>
+        <file>img/gestionUsuarios.png</file>
     </qresource>
 </RCC>

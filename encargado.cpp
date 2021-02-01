@@ -49,3 +49,13 @@ void Encargado::on_btnGuardar_clicked()
     }
     dbconexion.close();*/
 }
+
+void Encargado::on_btnGestionUsr_clicked()
+{
+    //ui->paginas->setCurrentIndex(1);
+}
+
+void Encargado::on_btnAsigZ_clicked()
+{
+    ui->paginas->setCurrentIndex(0);
+}
