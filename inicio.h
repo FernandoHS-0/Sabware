@@ -6,6 +6,7 @@
 #include <QSqlQuery>
 #include <QMainWindow>
 #include "encargado.h"
+#include "gerente.h"
 
 namespace Ui {
 class Inicio;
@@ -26,6 +27,7 @@ private:
     Ui::Inicio *ui;
     QSqlDatabase conexion;
     Encargado *enc;
+    Gerente *gen;
 };
 
 #endif // INICIO_H

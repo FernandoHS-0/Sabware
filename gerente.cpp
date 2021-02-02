@@ -2,6 +2,7 @@
 #include "ui_gerente.h"
 #include <QDateTime>
 #include <QTimer>
+#include <QMessageBox>
 
 Gerente::Gerente(QWidget *parent) :
     QWidget(parent),
@@ -27,4 +28,26 @@ void Gerente::reloj(){
 void Gerente::on_btnSalir_clicked()
 {
     this->close();
+}
+
+void Gerente::on_pushButton_clicked()
+{
+    int id;
+    id=ui->id_usuario->text().toInt();
+
+    QSqlQuery *eliminarUsuario = new QSqlQuery();
+
+    QMessageBox elimC;
+    elimC.setWindowTitle("\t\tAdvertencia");
+    elimC.setText("¿Esta seguro de eliminar su cuenta de forma permanente?");
+    elimC.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
+    elimC.setDefaultButton(QMessageBox::Yes);
+    elimC.setButtonText(QMessageBox::Yes,"Aceptar");
+    elimC.setButtonText(QMessageBox::No,"Cancelar");
+
+    if(elimC.exec()==QMessageBox::Yes){
+
+        (eliminarUsuario->exec("DELETE FROM usuario WHERE idUsuario = "+ QString::number(id) +";"));
+    }
+
 }

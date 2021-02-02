@@ -144,7 +144,7 @@ color: #D96704;</string>
 }</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="Agregar">
       <attribute name="title">
@@ -155,6 +155,29 @@ color: #D96704;</string>
       <attribute name="title">
        <string>Eliminar usuarios</string>
       </attribute>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>160</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="id_usuario">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>70</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="Modificar">
       <attribute name="title">
