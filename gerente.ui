@@ -156,8 +156,9 @@ color: #D96704;</string>
       <string notr="true">QTabBar::tab{
 padding-top: 5px;
 padding-bottom: 5px;
-padding-left:10px;
-padding-right: 10px;
+padding-left:20px;
+padding-right: 20px;
+font: 7.5pt &quot;HelvLight&quot;;
 }
 QTabBar::tab:selected{
 border-top: 1px solid red;
@@ -167,9 +168,6 @@ border-bottom:1px solid red;
 background-color: #F29F05;
 }
 
-
-
-    background: transparent;
 
 </string>
      </property>
@@ -232,15 +230,16 @@ color: #D96704;</string>
         <rect>
          <x>350</x>
          <y>150</y>
-         <width>171</width>
+         <width>241</width>
          <height>20</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">    background-color:#FFF;
     border: none;
-    border-bottom: 4px solid #D96704; 
+    border-bottom: 2px solid #D96704; 
 	color: black;
+font: 10pt &quot;HelvLight&quot;;
 </string>
        </property>
        <property name="text">
@@ -250,15 +249,17 @@ color: #D96704;</string>
       <widget class="QComboBox" name="comboBox">
        <property name="geometry">
         <rect>
-         <x>380</x>
-         <y>320</y>
-         <width>69</width>
+         <x>350</x>
+         <y>270</y>
+         <width>241</width>
          <height>22</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">
+        <string notr="true">font: 10pt &quot;HelvLight&quot;;
 background-color:#FFF;
+ border: none;
+border-bottom: 2px solid #D96704; 
 </string>
        </property>
        <item>
@@ -287,15 +288,16 @@ background-color:#FFF;
         <rect>
          <x>350</x>
          <y>120</y>
-         <width>171</width>
+         <width>241</width>
          <height>20</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">    background-color:#FFF;
     border: none;
-    border-bottom: 4px solid #D96704; 
+    border-bottom: 2px solid #D96704; 
 	color: black;
+font: 10pt &quot;HelvLight&quot;;
 </string>
        </property>
        <property name="text">
@@ -341,15 +343,16 @@ color: #D96704;</string>
         <rect>
          <x>350</x>
          <y>180</y>
-         <width>171</width>
+         <width>241</width>
          <height>20</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">    background-color:#FFF;
     border: none;
-    border-bottom: 4px solid #D96704; 
+    border-bottom: 2px solid #D96704; 
 	color: black;
+font: 10pt &quot;HelvLight&quot;;
 </string>
        </property>
        <property name="text">
@@ -378,16 +381,16 @@ color: #D96704;</string>
         <rect>
          <x>350</x>
          <y>210</y>
-         <width>171</width>
+         <width>241</width>
          <height>20</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">    background-color:#FFF;
     border: none;
-    border-bottom: 4px solid #D96704; 
+    border-bottom: 2px solid #D96704; 
 	color: black;
-</string>
+font: 10pt &quot;HelvLight&quot;;</string>
        </property>
        <property name="text">
         <string/>
@@ -396,8 +399,8 @@ color: #D96704;</string>
       <widget class="QLabel" name="label_6">
        <property name="geometry">
         <rect>
-         <x>220</x>
-         <y>320</y>
+         <x>190</x>
+         <y>270</y>
          <width>141</width>
          <height>21</height>
         </rect>
@@ -413,11 +416,23 @@ color: #D96704;</string>
       <widget class="QPushButton" name="Guardar">
        <property name="geometry">
         <rect>
-         <x>320</x>
-         <y>370</y>
-         <width>75</width>
-         <height>23</height>
+         <x>300</x>
+         <y>310</y>
+         <width>201</width>
+         <height>41</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#Guardar{
+	background-color: #D96704;
+	border: none;
+	font: 16pt &quot;HelvLight&quot;;
+	color: white;
+}
+
+#Guardar:Hover{
+	background-color: #A9BF04;
+}</string>
        </property>
        <property name="text">
         <string>Guardar</string>
@@ -428,16 +443,16 @@ color: #D96704;</string>
         <rect>
          <x>350</x>
          <y>240</y>
-         <width>171</width>
+         <width>241</width>
          <height>20</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">    background-color:#FFF;
     border: none;
-    border-bottom: 4px solid #D96704; 
+    border-bottom: 2px solid #D96704; 
 	color: black;
-</string>
+font: 10pt &quot;HelvLight&quot;;</string>
        </property>
        <property name="text">
         <string/>
@@ -458,19 +473,6 @@ color: #D96704;</string>
        </property>
        <property name="text">
         <string>Telefono</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="geometry">
-        <rect>
-         <x>620</x>
-         <y>100</y>
-         <width>75</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>PushButton</string>
        </property>
       </widget>
      </widget>

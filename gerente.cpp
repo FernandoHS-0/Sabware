@@ -16,7 +16,14 @@ Gerente::Gerente(QWidget *parent) :
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(reloj()));
     timer->start(1000);
-
+    dconexion = QSqlDatabase::addDatabase("QODBC","sabware_bd");
+    dconexion.setHostName("root");
+    dconexion.setDatabaseName("sabware_bd");
+    if(dconexion.open()){
+        qDebug() << "Conexion establecida";
+    }else{
+        qDebug() << "Error en la conexion";
+    }
 }
 
 Gerente::~Gerente()
@@ -45,16 +52,11 @@ void Gerente::on_pushButton_clicked()
 
 void Gerente::on_pushButton_2_clicked()
 {
-    QMessageBox msg;
-
-
-    msg.setText("¿SEGURO DE AGREGAR A COMO NUEVO USUARIO?");
-    qDebug()<<"AQUI ESTA";
+    /**/
 }
 
 void Gerente::on_Guardar_clicked()
 {
-    qDebug()<<"AQUI ESTA1";
     QString n = ui->Nombre->text();
     QString ap = ui->ApellidoP->text();
     QString am = ui->ApellidoM->text();
@@ -64,41 +66,39 @@ void Gerente::on_Guardar_clicked()
     QString usuario = "206";
     QMessageBox msg;
 
-
-    msg.setText("¿SEGURO DE AGREGAR A '"+n+" "+ap+" "+am+"' COMO NUEVO USUARIO?");
-    qDebug()<<"AQUI ESTA";
-    QAbstractButton * pButtonYes = msg.addButton(tr("SI"),QMessageBox::YesRole);
-    msg.addButton(tr("NO"),QMessageBox::NoRole);
+    msg.setText("¿Los datos del usuario son correctos?");
+    QAbstractButton * pButtonYes = msg.addButton(tr("Si"),QMessageBox::YesRole);
+    msg.addButton(tr("No"),QMessageBox::NoRole);
     msg.exec();
     if(msg.clickedButton()==pButtonYes){
         QString tipousuario = ui->comboBox->currentText();
 
-QSqlQuery query1(dconexion);
-QSqlQuery query2(dconexion);
+        QSqlQuery query1(dconexion);
+        QSqlQuery query2(dconexion);
 
-if(tipousuario == "Mesero"){
+        if(tipousuario == "Mesero"){
 
-    query1.prepare("call AgregarUsuarioMesero('"+usuario+"','"+n+"','"+contrasenia+"','"+ap+"','"+am+"','"+direccion+"','"+telefono+"')");
-    query1.exec();
-}
-if(tipousuario == "Cajero"){
-    query2.prepare("call AgregarUsuarioCajero('"+usuario+"','"+n+"','"+contrasenia+"','"+ap+"','"+am+"','"+direccion+"','"+telefono+"')");
-    query2.exec();
-}
-if(tipousuario == "Encargado"){
-    query2.prepare("call AgregarUsuarioEncargado('"+usuario+"','"+n+"','"+contrasenia+"','"+ap+"','"+am+"','"+direccion+"','"+telefono+"')");
-    query2.exec();
-}
-if(tipousuario == "Gerente"){
-    query2.prepare("call AgregarUsuarioGerente('"+usuario+"','"+n+"','"+contrasenia+"','"+ap+"','"+am+"','"+direccion+"','"+telefono+"')");
-    query2.exec();
-}
+            query1.prepare("call AgregarUsuarioMesero('"+usuario+"','"+n+"','"+contrasenia+"','"+ap+"','"+am+"','"+direccion+"','"+telefono+"')");
+            query1.exec();
+        }
+        if(tipousuario == "Cajero"){
+            query2.prepare("call AgregarUsuarioCajero('"+usuario+"','"+n+"','"+contrasenia+"','"+ap+"','"+am+"','"+direccion+"','"+telefono+"')");
+            query2.exec();
+        }
+        if(tipousuario == "Encargado"){
+            query2.prepare("call AgregarUsuarioEncargado('"+usuario+"','"+n+"','"+contrasenia+"','"+ap+"','"+am+"','"+direccion+"','"+telefono+"')");
+            query2.exec();
+        }
+        if(tipousuario == "Gerente"){
+            query2.prepare("call AgregarUsuarioGerente('"+usuario+"','"+n+"','"+contrasenia+"','"+ap+"','"+am+"','"+direccion+"','"+telefono+"')");
+            query2.exec();
+    }
     QMessageBox msg1;
-    msg.setWindowTitle("Exito");
-       msg1.setIcon(QMessageBox::Information);
-       msg1.setText("El usuario ha sido registrado");
-       msg.addButton(tr("Aceptar"),QMessageBox::YesRole);
-       msg1.exec();
-       close();
-         }
+    msg1.setIcon(QMessageBox::Information);
+    msg1.setText("El usuario ha sido registrado");
+    msg1.setWindowTitle("Usuario registrado");
+    msg1.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
+    msg1.addButton(tr("Aceptar"),QMessageBox::YesRole);
+    msg1.exec();
+   }
 }
