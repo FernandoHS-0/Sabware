@@ -11,7 +11,6 @@ Inicio::Inicio(QWidget *parent) :
     conexion.setHostName("root");
     conexion.setDatabaseName("sabware_bd");
 }
-
 Inicio::~Inicio()
 {
     delete ui;
@@ -27,11 +26,13 @@ void Inicio::on_pushButton_2_clicked()
     if(log.exec()){
         log.next();
         if(log.value(0).toInt() == usuario && log.value(1).toString() == contra){
-            enc = new Encargado;
-            enc->show();
+            /*enc = new Encargado;
+            enc->show();*/
+            ger = new Gerente;
+            ger->show();
         }
     }else {
         qDebug() << "Error en el login";
     }
-    conexion.close();
+    //conexion.close();
 }

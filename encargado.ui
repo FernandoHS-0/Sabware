@@ -122,6 +122,9 @@ color: #F29F05;</string>
    <property name="styleSheet">
     <string notr="true"/>
    </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
    <widget class="QWidget" name="asignarZona">
     <property name="styleSheet">
      <string notr="true">#asignarZona{

@@ -2,6 +2,9 @@
 #define GERENTE_H
 
 #include <QWidget>
+#include <QSql>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 namespace Ui {
 class Gerente;
@@ -20,9 +23,14 @@ public slots:
 private slots:
     void on_btnSalir_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Gerente *ui;
     QTimer *timer;
+    QSqlDatabase dbconexion;
 };
 
 #endif // GERENTE_H
