@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-01-2021 a las 02:30:46
--- Versión del servidor: 10.4.17-MariaDB
--- Versión de PHP: 7.4.13
+-- Tiempo de generación: 02-02-2021 a las 05:04:26
+-- Versión del servidor: 10.4.6-MariaDB
+-- Versión de PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -20,12 +21,46 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sabware_bd`
 --
-
--- --------------------------------------------------------
-
 DROP DATABASE IF EXISTS sabware_bd;
 CREATE DATABASE sabware_bd;
 USE sabware_bd;
+
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AgregarUsuarioCajero` (`Idusuario` INT, `Nombre` VARCHAR(45), `contrasenia` VARCHAR(45), `A_M` VARCHAR(45), `A_P` VARCHAR(45), `Direccion` VARCHAR(45), `Telefono` VARCHAR(45))  BEGIN
+INSERT INTO USUARIO(idUsuario,contrasenia,nombre,a_materno,a_paterno,direccion,telefono)
+VALUES(Idusuario,contrasenia,Nombre,A_M,A_P,Direccion,Telefono);
+INSERT INTO cajero(idCajero,idUsuario)
+VALUES((SELECT MAX(idUsuario) FROM USUARIO),(SELECT MAX(idUsuario) FROM USUARIO));
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AgregarUsuarioEncargado` (`Idusuario` INT, `Nombre` VARCHAR(45), `contrasenia` VARCHAR(45), `A_M` VARCHAR(45), `A_P` VARCHAR(45), `Direccion` VARCHAR(45), `Telefono` VARCHAR(45))  BEGIN
+INSERT INTO USUARIO(idUsuario,contrasenia,nombre,a_materno,a_paterno,direccion,telefono)
+VALUES(Idusuario,contrasenia,Nombre,A_M,A_P,Direccion,Telefono);
+INSERT INTO encargado(idEncargado,idUsuario)
+VALUES((SELECT MAX(idUsuario) FROM USUARIO),(SELECT MAX(idUsuario) FROM USUARIO));
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AgregarUsuarioGerente` (`Idusuario` INT, `Nombre` VARCHAR(45), `contrasenia` VARCHAR(45), `A_M` VARCHAR(45), `A_P` VARCHAR(45), `Direccion` VARCHAR(45), `Telefono` VARCHAR(45))  BEGIN
+INSERT INTO USUARIO(idUsuario,contrasenia,nombre,a_materno,a_paterno,direccion,telefono)
+VALUES(Idusuario,contrasenia,Nombre,A_M,A_P,Direccion,Telefono);
+INSERT INTO gerente(idGerente,idUsuario)
+VALUES((SELECT MAX(idUsuario) FROM USUARIO),(SELECT MAX(idUsuario) FROM USUARIO));
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AgregarUsuarioMesero` (`Idusuario` INT, `Nombre` VARCHAR(45), `contrasenia` VARCHAR(45), `A_M` VARCHAR(45), `A_P` VARCHAR(45), `Direccion` VARCHAR(45), `Telefono` VARCHAR(45))  BEGIN
+INSERT INTO USUARIO(idUsuario,contrasenia,nombre,a_materno,a_paterno,direccion,telefono)
+VALUES(Idusuario,contrasenia,Nombre,A_M,A_P,Direccion,Telefono);
+INSERT INTO Mesero(idMesero,idUsuario)
+VALUES((SELECT MAX(idUsuario) FROM USUARIO),(SELECT MAX(idUsuario) FROM USUARIO));
+END$$
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
 --
 -- Estructura de tabla para la tabla `cajero`
 --
@@ -94,6 +129,17 @@ INSERT INTO `encargado` (`idEncargado`, `idUsuario`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `fotos`
+--
+
+CREATE TABLE `fotos` (
+  `Id_foto` int(11) NOT NULL,
+  `imgen` longblob DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `gerente`
 --
 
@@ -131,7 +177,7 @@ CREATE TABLE `inventario` (
 CREATE TABLE `mesa` (
   `idMesa` int(11) NOT NULL,
   `estado` varchar(45) NOT NULL,
-  `idZona` int(11) NOT NULL
+  `idZona` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -155,7 +201,7 @@ INSERT INTO `mesa` (`idMesa`, `estado`, `idZona`) VALUES
 CREATE TABLE `mesero` (
   `idMesero` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
-  `idZona` int(11) NOT NULL
+  `idZona` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -163,7 +209,8 @@ CREATE TABLE `mesero` (
 --
 
 INSERT INTO `mesero` (`idMesero`, `idUsuario`, `idZona`) VALUES
-(1, 3, 2);
+(1, 3, 2),
+(202, 202, NULL);
 
 -- --------------------------------------------------------
 
@@ -204,7 +251,8 @@ INSERT INTO `usuario` (`idUsuario`, `contrasenia`, `nombre`, `a_materno`, `a_pat
 (1, 'encargado1', 'Fernando', 'Hernandez', 'Sanchez', 'Av Madero 32', '2345674789'),
 (2, 'gerente1', 'Alberto', 'Martinez', 'Gonzalez', 'Ignacio Zaragoza 23', '2345213456'),
 (3, 'mesero1', 'Saul', 'Garcia', 'Sanchez', 'Polimeros 21', '2458975614'),
-(4, 'cajero1', 'Stephane', 'Perez', 'Perez', 'Indios verdes 9', '2484918619');
+(4, 'cajero1', 'Stephane', 'Perez', 'Perez', 'Indios verdes 9', '2484918619'),
+(202, '123', 'Saul', 'Garcia', 'Mendez', 'Enrique Segoviano', '23833851065');
 
 -- --------------------------------------------------------
 
@@ -337,7 +385,7 @@ ALTER TABLE `gerente`
 -- Filtros para la tabla `cajero`
 --
 ALTER TABLE `cajero`
-  ADD CONSTRAINT `cajero_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `cajero_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `detalleorden`
@@ -356,26 +404,26 @@ ALTER TABLE `elemento_menu`
 -- Filtros para la tabla `encargado`
 --
 ALTER TABLE `encargado`
-  ADD CONSTRAINT `encargado_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `encargado_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `gerente`
 --
 ALTER TABLE `gerente`
-  ADD CONSTRAINT `gerente_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `gerente_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `mesa`
 --
 ALTER TABLE `mesa`
-  ADD CONSTRAINT `mesa_ibfk_1` FOREIGN KEY (`idZona`) REFERENCES `zona` (`idZona`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `mesa_ibfk_1` FOREIGN KEY (`idZona`) REFERENCES `zona` (`idZona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `mesero`
 --
 ALTER TABLE `mesero`
-  ADD CONSTRAINT `mesero_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `mesero_ibfk_2` FOREIGN KEY (`idZona`) REFERENCES `zona` (`idZona`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `mesero_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `mesero_ibfk_2` FOREIGN KEY (`idZona`) REFERENCES `zona` (`idZona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `orden`
