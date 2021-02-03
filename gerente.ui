@@ -11,7 +11,14 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Gerente</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="img.qrc">
+    <normaloff>:/imagenes/img/Logo.png</normaloff>:/imagenes/img/Logo.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="menuL" native="true">
    <property name="geometry">
@@ -119,7 +126,6 @@ color: #F29F05;</string>
     <property name="styleSheet">
      <string notr="true">#TabGestion{
 	background-color: white;
-	image: url(:/imagenes/img/LogoFaded.png);
 }</string>
     </property>
     <widget class="QLabel" name="label">

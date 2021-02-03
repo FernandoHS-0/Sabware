@@ -30,6 +30,8 @@ private slots:
 
     void on_Guardar_clicked();
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Gerente *ui;
     QTimer *timer;
