@@ -153,16 +153,11 @@ QLineEdit:Hover{
 }</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="Agregar">
       <attribute name="title">
        <string>Agregar usuarios</string>
-      </attribute>
-     </widget>
-     <widget class="QWidget" name="Eliminar">
-      <attribute name="title">
-       <string>Eliminar usuarios</string>
       </attribute>
      </widget>
      <widget class="QWidget" name="Modificar">
@@ -175,7 +170,7 @@ QLineEdit:Hover{
       <widget class="QPushButton" name="pushButton_2">
        <property name="geometry">
         <rect>
-         <x>530</x>
+         <x>640</x>
          <y>400</y>
          <width>91</width>
          <height>31</height>
@@ -193,13 +188,13 @@ QPushButton:Hover{
 }</string>
        </property>
        <property name="text">
-        <string>Cancelar</string>
+        <string>Eliminar</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_3">
        <property name="geometry">
         <rect>
-         <x>640</x>
+         <x>540</x>
          <y>400</y>
          <width>91</width>
          <height>31</height>

@@ -67,6 +67,8 @@ void Gerente::on_pushButton_3_clicked()
         QMessageBox mssg;
         mssg.setText("Datos del usuario modificados.");
         mssg.setIcon(QMessageBox::Information);
+        mssg.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
+        mssg.setWindowTitle("Advertencia");
         mssg.addButton(tr("Aceptar"),QMessageBox::YesRole);
         mssg.exec();
     }
@@ -74,7 +76,36 @@ void Gerente::on_pushButton_3_clicked()
         QMessageBox mssg;
         mssg.setText("No se pudieron modificar los datos.");
         mssg.setIcon(QMessageBox::Information);
+        mssg.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
+        mssg.setWindowTitle("Advertencia");
         mssg.addButton(tr("Aceptar"),QMessageBox::YesRole);
         mssg.exec();
+    }
+}
+
+void Gerente::on_pushButton_2_clicked()
+{
+    QMessageBox mssg1;
+    mssg1.setText("¿Esta seguro de eliminar este usuario?");
+    mssg1.setIcon(QMessageBox::Warning);
+    mssg1.setWindowTitle("Advertencia");
+    mssg1.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));;
+    QAbstractButton * pButtonYes = mssg1.addButton(tr("Si"), QMessageBox::YesRole);
+    QAbstractButton * pButtonNo = mssg1.addButton(tr("No"), QMessageBox::NoRole);
+    int idu = ui->lineEdit_3->text().toInt();
+    QSqlQuery Eliminar;
+    Eliminar.prepare("DELETE FROM Usuario WHERE idUsuario = :idU;");
+    Eliminar.bindValue(":idU", idu);
+    mssg1.exec();
+    if(mssg1.clickedButton() == pButtonYes){
+        Eliminar.exec();
+        QMessageBox mssg2;
+        mssg2.setText("El usuario ha sido eliminado");
+        mssg2.setIcon(QMessageBox::Warning);
+        mssg2.setWindowTitle("Usuario eliminado");
+        mssg2.addButton("Aceptar", QMessageBox::AcceptRole);
+        mssg2.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
+        mssg2.exec();
+
     }
 }
