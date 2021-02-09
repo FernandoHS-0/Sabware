@@ -18,7 +18,11 @@
     <normaloff>:/imagenes/img/Logo.png</normaloff>:/imagenes/img/Logo.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">
+#comboBox
+{
+	background: #4D4D4D;
+}</string>
   </property>
   <widget class="QWidget" name="menuL" native="true">
    <property name="geometry">
@@ -266,7 +270,10 @@ QLineEdit:Hover{
        <property name="styleSheet">
         <string notr="true">border: none;
 border-bottom: 2px solid #D96704;
-font: 12pt &quot;HelvLight&quot;;</string>
+font: 12pt &quot;HelvLight&quot;;
+
+  background: white;
+</string>
        </property>
        <item>
         <property name="text">

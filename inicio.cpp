@@ -1,5 +1,9 @@
 #include "inicio.h"
 #include "ui_inicio.h"
+#include <QMessageBox>
+
+
+
 #include <QDebug>
 
 Inicio::Inicio(QWidget *parent) :
@@ -27,10 +31,77 @@ void Inicio::on_pushButton_2_clicked()
     log.bindValue(":idU", usuario);
     if(log.exec()){
         log.next();
-        if(log.value(0).toInt() == usuario && log.value(1).toString() == contra){
+        QString id = log.value(0).toString();
+        QString resultadoGere;
+        QString resultadoEncar;
+        QString resultadoCajero;
+        QString resultadoMesero;
+        QMessageBox msg;
+        QSqlQuery prueba;
+        QString conexion;
+
+
+ //Cambiar los atributos en la base de datos idUsuario por idGerente, datos contraproducentes
+        prueba.prepare("SELECT idGerente, IF('"+id+"'=idGerente ,'TRUE','FALSE') AS ESTADO FROM gerente WHERE idGerente='"+id+"'");
+        prueba.exec();
+
+        while(prueba.next())
+        {
+          resultadoGere=prueba.value(1).toString();
+        }
+
+        if(resultadoGere=="TRUE")
+        {
             gere = new Gerente;
             gere->show();
+            conexion=1;
         }
+        prueba.prepare("SELECT idEncargado, IF('"+id+"'=idEncargado ,'TRUE','FALSE') AS ESTADO FROM encargado WHERE idEncargado='"+id+"'");
+        prueba.exec();
+        while(prueba.next())
+        {
+          resultadoEncar=prueba.value(1).toString();
+        }
+        qDebug()<<resultadoEncar;
+
+        if(resultadoEncar=="TRUE")
+        {
+
+            enc = new Encargado;
+            enc->show();
+            conexion=1;
+        }/*
+        prueba.prepare("SELECT idCajero, IF('"+id+"'=idCajero ,'TRUE','FALSE') AS ESTADO FROM cajero WHERE idCajero='"+id+"'");
+        prueba.exec();
+        while(prueba.next())
+        {
+          resultadoCajero=prueba.value(1).toString();
+        }
+        if(resultadoCajero=="TRUE")
+        {
+            caj = new Cajero;
+            caj->show();
+        }
+        prueba.prepare("SELECT idMesero, IF('"+id+"'=idMesero ,'TRUE','FALSE') AS ESTADO FROM mesero WHERE idMesero='"+id+"'");
+        prueba.exec();
+        while(prueba.next())
+        {
+          resultadoMesero=prueba.value(1).toString();
+        }
+        if(resultadoMesero=="TRUE")
+        {
+            mes = new Mesero;
+            mes->show();
+        }*/
+        if(conexion!=1)
+        {
+            msg.setWindowTitle("FALLO INICIO DE SESION");
+            msg.setIcon(QMessageBox::Critical);
+            msg.setText("Usuario o contraseña invalida");
+            msg.addButton(tr("Aceptar"),QMessageBox::YesRole);
+            msg.exec();
+        }
+
     }else {
         qDebug() << "Error en el login";
     }
