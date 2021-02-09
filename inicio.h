@@ -7,6 +7,7 @@
 #include <QMainWindow>
 #include "encargado.h"
 #include "gerente.h"
+#include "mesero.h"
 
 namespace Ui {
 class Inicio;
@@ -28,6 +29,7 @@ private:
     QSqlDatabase conexion;
     Encargado *enc;
     Gerente *gere;
+    Mesero *mes;
 };
 
 #endif // INICIO_H

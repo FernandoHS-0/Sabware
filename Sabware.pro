@@ -28,17 +28,20 @@ SOURCES += \
         encargado.cpp \
         gerente.cpp \
         main.cpp \
-        inicio.cpp
+        inicio.cpp \
+        mesero.cpp
 
 HEADERS += \
         encargado.h \
         gerente.h \
-        inicio.h
+        inicio.h \
+        mesero.h
 
 FORMS += \
         encargado.ui \
         gerente.ui \
-        inicio.ui
+        inicio.ui \
+        mesero.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

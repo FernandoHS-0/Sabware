@@ -28,8 +28,8 @@ void Inicio::on_pushButton_2_clicked()
     if(log.exec()){
         log.next();
         if(log.value(0).toInt() == usuario && log.value(1).toString() == contra){
-            gere = new Gerente;
-            gere->show();
+            mes = new Mesero;
+            mes->show();
         }
     }else {
         qDebug() << "Error en el login";
