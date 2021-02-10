@@ -36,10 +36,10 @@ Mesero::Mesero(QWidget *parent) :
     int nRow = 0, nCol = 0;
     int totMes = getMesas.value(0).toInt();
     for (int i = 0; i < totMes; i++) {
-        QString nombre = "Mesa " + QString::number(i+1);
+        QString nombre = QString::number(i+1);
         QPushButton * btnMesa = new QPushButton;
         btnMesa->setObjectName(nombre);
-        btnMesa->setText(nombre);
+        btnMesa->setText("Mesa " + nombre);
         btnMesa->setStyleSheet("QPushButton{border-radius: 20px; background-color: #D96704; color: white; font: 12pt 'HelvLight'; width: 100px; height: 100px;} QPushButton:Hover{border: 3px solid #D92B04}");
         ui->gridLayout->addWidget(btnMesa, nRow, nCol, Qt::AlignHCenter);
         connect(btnMesa, SIGNAL(clicked()), SLOT(on_btnMesa_clicked()));
@@ -51,30 +51,12 @@ Mesero::Mesero(QWidget *parent) :
 
     }
 
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(0);
 
-    int nRow2 = 0;
-    QSqlQuery platos(dbconexion);
-    if(platos.exec("Select idPlatillo, nombre_platillo, precio from elemento_menu WHERE idCategoria = 1;")){
-        while (platos.next()) {
-            QLabel * nombPla = new QLabel;
-            QSpinBox * cant = new QSpinBox;
-            nombPla->setText(platos.value(1).toString());
-            nombPla->setStyleSheet("QLabel{font: 12pt 'HelvLight';}");
-            cant->setObjectName(platos.value(0).toString());
-            ui->gridLayout_2->addWidget(nombPla,nRow2, 0);
-            ui->gridLayout_2->addWidget(cant, nRow2, 1);
-            qDebug() << nRow2;
-            nRow2++;
-        }
-    }else{
-        qDebug() << "Query no ejecutado";
-    }
-
-
-
-
-
+    entradas();
+    pFuerte();
+    postres();
+    bebidas();
 }
 
 Mesero::~Mesero()
@@ -88,6 +70,94 @@ void Mesero::reloj(){
     ui->relojD->setText(horaTexto);
 }
 
+void Mesero::entradas(){
+    int nRow2 = 0;
+    QSqlQuery platos(dbconexion);
+    if(platos.exec("Select idPlatillo, nombre_platillo, precio from elemento_menu WHERE idCategoria = 1;")){
+        while (platos.next()) {
+            QLabel * nombPla = new QLabel;
+            QSpinBox * cant = new QSpinBox;
+            nombPla->setText(platos.value(1).toString());
+            nombPla->setStyleSheet("QLabel{font: 12pt 'HelvLight';}");
+            cant->setObjectName(platos.value(0).toString());
+            cant->setMinimum(0);
+            cant->resize(70, 30);
+            cant->setStyleSheet("QSpinBox{font: 12pt 'HelvLight';} QSpinBox::down-button{backgrpund-color; white;} QSpinBox::up-button{backgrpund-color; white;}");
+            ui->gridLayout_2->addWidget(nombPla,nRow2, 0);
+            ui->gridLayout_2->addWidget(cant, nRow2, 1);
+            nRow2++;
+        }
+    }else{
+        qDebug() << "Query no ejecutado";
+    }
+}
+
+void Mesero::pFuerte(){
+    int nRow2 = 0;
+    QSqlQuery platos(dbconexion);
+    if(platos.exec("Select idPlatillo, nombre_platillo, precio from elemento_menu WHERE idCategoria = 2;")){
+        while (platos.next()) {
+            QLabel * nombPla = new QLabel;
+            QSpinBox * cant = new QSpinBox;
+            nombPla->setText(platos.value(1).toString());
+            nombPla->setStyleSheet("QLabel{font: 12pt 'HelvLight';}");
+            cant->setObjectName(platos.value(0).toString());
+            cant->setMinimum(0);
+            cant->resize(70, 30);
+            cant->setStyleSheet("QSpinBox{font: 12pt 'HelvLight';} QSpinBox::down-button{backgrpund-color; white;} QSpinBox::up-button{backgrpund-color; white;}");
+            ui->gridPFuerte->addWidget(nombPla,nRow2, 0);
+            ui->gridPFuerte->addWidget(cant, nRow2, 1);
+            nRow2++;
+        }
+    }else{
+        qDebug() << "Query no ejecutado";
+    }
+}
+
+void Mesero::postres(){
+    int nRow2 = 0;
+    QSqlQuery platos(dbconexion);
+    if(platos.exec("Select idPlatillo, nombre_platillo, precio from elemento_menu WHERE idCategoria = 3;")){
+        while (platos.next()) {
+            QLabel * nombPla = new QLabel;
+            QSpinBox * cant = new QSpinBox;
+            nombPla->setText(platos.value(1).toString());
+            nombPla->setStyleSheet("QLabel{font: 12pt 'HelvLight';}");
+            cant->setObjectName(platos.value(0).toString());
+            cant->setMinimum(0);
+            cant->resize(70, 30);
+            cant->setStyleSheet("QSpinBox{font: 12pt 'HelvLight';} QSpinBox::down-button{backgrpund-color; white;} QSpinBox::up-button{backgrpund-color; white;}");
+            ui->gridPostre->addWidget(nombPla,nRow2, 0);
+            ui->gridPostre->addWidget(cant, nRow2, 1);
+            nRow2++;
+        }
+    }else{
+        qDebug() << "Query no ejecutado";
+    }
+}
+
+void Mesero::bebidas(){
+    int nRow2 = 0;
+    QSqlQuery platos(dbconexion);
+    if(platos.exec("Select idPlatillo, nombre_platillo, precio from elemento_menu WHERE idCategoria = 4;")){
+        while (platos.next()) {
+            QLabel * nombPla = new QLabel;
+            QSpinBox * cant = new QSpinBox;
+            nombPla->setText(platos.value(1).toString());
+            nombPla->setStyleSheet("QLabel{font: 12pt 'HelvLight';}");
+            cant->setObjectName(platos.value(0).toString());
+            cant->setMinimum(0);
+            cant->resize(70, 30);
+            cant->setStyleSheet("QSpinBox{font: 12pt 'HelvLight';} QSpinBox::down-button{backgrpund-color; white;} QSpinBox::up-button{backgrpund-color; white;}");
+            ui->gridBebidas->addWidget(nombPla,nRow2, 0);
+            ui->gridBebidas->addWidget(cant, nRow2, 1);
+            nRow2++;
+        }
+    }else{
+        qDebug() << "Query no ejecutado";
+    }
+}
+
 
 void Mesero::on_btnSalir_clicked()
 {
@@ -97,9 +167,14 @@ void Mesero::on_btnSalir_clicked()
 void Mesero::on_btnMesa_clicked(){
     QPushButton * btnMes = dynamic_cast<QPushButton *>(sender());
     if(btnMes){
-        QMessageBox msg;
-        QString nom = btnMes->objectName();
-        msg.setText("Boton conectado " + nom);
-        msg.exec();
+        ui->lblNoMesa->setText(btnMes->text());
+        ui->stackedWidget->setCurrentIndex(1);
+        mesAct = btnMes->objectName().toInt();
     }
+}
+
+void Mesero::on_btnOrdenar_clicked()
+{
+    mesAct = 0;
+    ui->stackedWidget->setCurrentIndex(0);
 }

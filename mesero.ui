@@ -133,7 +133,7 @@ color: #F29F05;</string>
       <rect>
        <x>10</x>
        <y>5</y>
-       <width>511</width>
+       <width>351</width>
        <height>521</height>
       </rect>
      </property>
@@ -169,8 +169,8 @@ color: #F29F05;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>511</width>
-        <height>410</height>
+        <width>351</width>
+        <height>413</height>
        </rect>
       </property>
       <attribute name="label">
@@ -179,38 +179,194 @@ color: #F29F05;</string>
       <widget class="QWidget" name="gridLayoutWidget_2">
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>10</x>
          <y>10</y>
-         <width>471</width>
+         <width>331</width>
          <height>391</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2"/>
       </widget>
      </widget>
-     <widget class="QWidget" name="page_2">
+     <widget class="QWidget" name="pFuerte">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>511</width>
-        <height>410</height>
+        <width>351</width>
+        <height>413</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: white;</string>
       </property>
       <attribute name="label">
        <string>Plato fuerte</string>
       </attribute>
+      <widget class="QWidget" name="gridLayoutWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>331</width>
+         <height>391</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridPFuerte"/>
+      </widget>
      </widget>
-     <widget class="QWidget" name="page_3">
+     <widget class="QWidget" name="postre">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>351</width>
+        <height>413</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: white;</string>
+      </property>
       <attribute name="label">
        <string>Postre</string>
       </attribute>
+      <widget class="QWidget" name="gridLayoutWidget_4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>331</width>
+         <height>391</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridPostre"/>
+      </widget>
      </widget>
-     <widget class="QWidget" name="page_4">
+     <widget class="QWidget" name="bebida">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>351</width>
+        <height>413</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: white;</string>
+      </property>
       <attribute name="label">
        <string>Bebidas</string>
       </attribute>
+      <widget class="QWidget" name="gridLayoutWidget_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>331</width>
+         <height>391</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridBebidas"/>
+      </widget>
      </widget>
+    </widget>
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>120</y>
+       <width>391</width>
+       <height>341</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#tableWidget{
+	font: 12pt &quot;HelvLight&quot;;
+}
+</string>
+     </property>
+     <column>
+      <property name="text">
+       <string>Orden</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Cantidad</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Precio</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="lblNoMesa">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>30</y>
+       <width>91</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 18pt &quot;HelvLight&quot;;
+color: #D96704;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnOrdenar">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>470</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#btnOrdenar{
+	background-color: #D96704;
+	border: none;
+	font: 16pt &quot;HelvLight&quot;;
+	color: white;
+}
+
+#btnOrdenar:Hover{
+	background-color: #A9BF04;
+}</string>
+     </property>
+     <property name="text">
+      <string>Ordenar</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnCancelar">
+     <property name="geometry">
+      <rect>
+       <x>610</x>
+       <y>470</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#btnCancelar{
+	background-color: #D96704;
+	border: none;
+	font: 16pt &quot;HelvLight&quot;;
+	color: white;
+}
+
+#btnCancelar:Hover{
+	background-color: #A9BF04;
+}</string>
+     </property>
+     <property name="text">
+      <string>Cancelar</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="zona3"/>
