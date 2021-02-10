@@ -81,6 +81,8 @@ CREATE TABLE `categoria_menu` (
   `nombre_categoria` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `categoria_menu` VALUES (1, "Entradas"), (2, "Plato fuerte"), (3, "Postre"), (4, "Bebidas");
+
 -- --------------------------------------------------------
 
 --
@@ -107,6 +109,21 @@ CREATE TABLE `elemento_menu` (
   `precio` double NOT NULL,
   `idCategoria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `elemento_menu` VALUES (1, "Sopa de verdura", "Sopa de verduras de jitomate", 20, 1),
+(2, "Sopa de pasta", "Sopa de pasta de jitomate", 20, 1),
+(3, "Spaghetti rojo", "Spaghetti seco en salsa de jitomate", 30, 1),
+(4, "Consome de pollo", "Consome de caldo de pollo con verduras", 20, 1),
+(5, "Milanesa", "Milanesa de puerco acompañada con ensalada y papas fritas", 35, 2),
+(6, "Mole verde", "Mole verde de carne de puerco", 35, 2),
+(7, "Mole poblano", "Mole poblano picoso con pollo", 40, 2),
+(8, "Mosaico", "Gelatina de mosaico con crema", 20, 3),
+(9, "Fresas con crema", "Fresas con cream acida y azucar", 15, 3),
+(10, "Flan", "Rebanada de flan napolitano", 20, 3),
+(11, "Vaso de agua", "Vaso de agua de sabor del dia", 10, 4),
+(12, "Litro de agua", "Litro de agua de sabor del dia", 25, 4),
+(13, "Refresco lata", "Refresco de lata 355 ml", 15, 4),
+(14, "Refresco envase", "Refresco de envase 600 ml", 20, 4);
 
 -- --------------------------------------------------------
 
