@@ -178,28 +178,71 @@ void Mesero::on_btnMesa_clicked(){
 
     if(btnMes){
         ui->lblNoMesa->setText(btnMes->text());
-        ui->stackedWidget->setCurrentIndex(1);
         mesAct = btnMes->objectName().toInt();
+        estadoMesa.prepare("SELECT IF(idCajero = NULL, 'FALSE', 'TRUE') FROM orden WHERE idMesa = :idM");
+        estadoMesa.bindValue(":idM", mesAct);
+        estadoMesa.exec();
+        estadoMesa.next();
+        if(estadoMesa.value(0).toBool()){
+            QSqlQuery tabla(dbconexion);
+            tabla.prepare("SELECT do.cantidad, do.subtotal, m.nombre_platillo FROM detalleorden as do INNER JOIN orden AS o ON do.idOrden = o.idOrden INNER JOIN elemento_menu AS m on do.idPlatillo = m.idPlatillo WHERE o.idMesa = :idMes;");
+            tabla.bindValue(":idMes", mesAct);
+            tabla.exec();
+            while (tabla.next()) {
+                QString nombre = tabla.value(2).toString();
+                QString cantidad = tabla.value(0).toString();
+                QString subtotal = tabla.value(1).toString();
+                ui->tablaOrden->setRowCount(ui->tablaOrden->rowCount()+1);
 
-        insertOrder.prepare("insert into orden(fecha,idMesero,idMesa)values(curdate(),3,:mesa);");
-        insertOrder.bindValue(":mesa",mesAct);
-        insertOrder.exec();
-        //Ya se inserto en la tabla orden
+                QTableWidgetItem *nom = new QTableWidgetItem(nombre);
+                QTableWidgetItem *cant = new QTableWidgetItem(cantidad);
+                QTableWidgetItem *sub = new QTableWidgetItem(subtotal);
+                ui->tablaOrden->setItem(ui->tablaOrden->rowCount()-1,0,nom);
+                ui->tablaOrden->setItem(ui->tablaOrden->rowCount()-1,1,cant);
+                ui->tablaOrden->setItem(ui->tablaOrden->rowCount()-1,2,sub);
+
+                ui->tablaOrden->setColumnCount(3);
+                ui->tablaOrden->setColumnWidth(0, 240);
+                ui->tablaOrden->setColumnWidth(1, 65);
+                ui->tablaOrden->setColumnWidth(2, 65);
+            }
+        }else{
+            insertOrder.prepare("insert into orden(fecha,idMesero,idMesa)values(curdate(),3,:mesa);");
+            insertOrder.bindValue(":mesa",mesAct);
+            insertOrder.exec();
+        }
+
+        ui->stackedWidget->setCurrentIndex(1);
     }
 }
 
 void Mesero::on_btnOrdenar_clicked()
 {
-    mesAct = 0;
-    ui->stackedWidget->setCurrentIndex(0);
+    QMessageBox conf;
+    conf.setText("Confirmar orden");
+    QAbstractButton * btnAcp = conf.addButton("Aceptar", QMessageBox::AcceptRole);
+    conf.addButton("Cancelar", QMessageBox::AcceptRole);
+    conf.setIcon(QMessageBox::Information);
+    conf.setWindowTitle("Confirmar orden");
+    conf.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
+    conf.exec();
+    if(conf.clickedButton() == btnAcp){
+        mesAct = 0;
+        ui->stackedWidget->setCurrentIndex(0);
+        ui->tablaOrden->clearContents();
+        ui->tablaOrden->model()->removeRows(0, ui->tablaOrden->rowCount());
+    }
+
 }
 
 void Mesero::agregarElementoMenu(int cantidad){
     QSpinBox *nombre = dynamic_cast<QSpinBox*>(sender());
     qDebug()<<"ENTRO A LA SEÑAL";
     if(nombre){
+        ui->tablaOrden->clearContents();
+        ui->tablaOrden->model()->removeRows(0, ui->tablaOrden->rowCount());
         QString ordenAct,obtenerOrden;
-        bool existe;
+        bool existe = false;
         qDebug()<<nombre->objectName();
         qDebug()<<nombre->value();
         QSqlQuery obtenerId(dbconexion),agregarPlato(dbconexion),verificarPlato(dbconexion),aniadir(dbconexion),actualizarTabla(dbconexion);
@@ -218,10 +261,13 @@ void Mesero::agregarElementoMenu(int cantidad){
         precio.next();
         int precioPlatillo =precio.value(0).toInt();
         if(ordenAct=="0"){
-        verificarPlato.prepare( " SELECT idOrden, IF ( " + nombre->objectName() + "  = idPlatillo, 'TRUE', 'FALSE') AS ESTADO FROM detalleorden WHERE idOrden = " + obtenerOrden + ";");
+        verificarPlato.prepare( "SELECT idOrden, IF ( " + nombre->objectName() + "  = idPlatillo, 'TRUE', 'FALSE') AS ESTADO FROM detalleorden WHERE idOrden = " + obtenerOrden + ";");
         verificarPlato.exec();
         while(verificarPlato.next()){
-            existe = verificarPlato.value(1).toBool();
+            if(verificarPlato.value(1).toBool()){
+                existe = true;
+                break;
+            }
 
         }
 
@@ -231,7 +277,6 @@ void Mesero::agregarElementoMenu(int cantidad){
             aniadir.prepare("update detalleorden set cantidad = cantidad + 1,subtotal = subtotal + :preci where idOrden="+obtenerOrden+" and idPlatillo ="+nombre->objectName()+";");
             aniadir.bindValue(":preci",precioPlatillo);
             aniadir.exec();
-            ui->tablaOrden->reset();
 
             actualizarTabla.prepare("select elemento_menu.nombre_platillo,detalleorden.cantidad,detalleorden.subtotal from detalleorden   inner join elemento_menu ON 	elemento_menu.idPlatillo = detalleorden.idPlatillo where detalleorden.idOrden = "+obtenerOrden+"; ");
             actualizarTabla.exec();
@@ -257,7 +302,6 @@ void Mesero::agregarElementoMenu(int cantidad){
             agregarPlato.prepare("insert into detalleorden(idPlatillo,idOrden,cantidad,subtotal) values("+nombre->objectName()+","+obtenerOrden+",1,:pre);");
             agregarPlato.bindValue(":pre",precioPlatillo);
             agregarPlato.exec();
-            ui->tablaOrden->reset();
 
             actualizarTabla.prepare("select elemento_menu.nombre_platillo,detalleorden.cantidad,detalleorden.subtotal from detalleorden   inner join elemento_menu ON 	elemento_menu.idPlatillo = detalleorden.idPlatillo where detalleorden.idOrden = "+obtenerOrden+"; ");
             actualizarTabla.exec();

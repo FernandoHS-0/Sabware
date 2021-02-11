@@ -170,7 +170,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>401</height>
+        <height>413</height>
        </rect>
       </property>
       <attribute name="label">
@@ -194,7 +194,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>401</height>
+        <height>413</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -221,7 +221,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>401</height>
+        <height>413</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -248,7 +248,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>401</height>
+        <height>413</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -275,12 +275,12 @@ color: #F29F05;</string>
       <rect>
        <x>400</x>
        <y>120</y>
-       <width>391</width>
+       <width>390</width>
        <height>341</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">#tableWidget{
+      <string notr="true">#tableWidget::item{
 	font: 12pt &quot;HelvLight&quot;;
 }
 </string>
@@ -297,7 +297,7 @@ color: #F29F05;</string>
      </column>
      <column>
       <property name="text">
-       <string>Precio</string>
+       <string>Sub total</string>
       </property>
      </column>
     </widget>

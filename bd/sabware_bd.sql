@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 02-02-2021 a las 05:04:26
+-- Servidor: localhost
+-- Tiempo de generación: 11-02-2021 a las 05:30:28
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,9 +20,11 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sabware_bd`
 --
-DROP DATABASE IF EXISTS sabware_bd;
-CREATE DATABASE sabware_bd;
-USE sabware_bd;
+
+DROP DATABASE IF EXISTS `sabware_bd`;
+CREATE DATABASE `sabware_bd`;
+
+USE `sabware_bd`;
 
 DELIMITER $$
 --
@@ -32,29 +33,29 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AgregarUsuarioCajero` (`Idusuario` INT, `Nombre` VARCHAR(45), `contrasenia` VARCHAR(45), `A_M` VARCHAR(45), `A_P` VARCHAR(45), `Direccion` VARCHAR(45), `Telefono` VARCHAR(45))  BEGIN
 INSERT INTO USUARIO(idUsuario,contrasenia,nombre,a_materno,a_paterno,direccion,telefono)
 VALUES(Idusuario,contrasenia,Nombre,A_M,A_P,Direccion,Telefono);
-INSERT INTO cajero(idCajero,idUsuario)
-VALUES((SELECT MAX(idUsuario) FROM USUARIO),(SELECT MAX(idUsuario) FROM USUARIO));
+INSERT INTO cajero(idCajero)
+VALUES((SELECT MAX(idUsuario) FROM USUARIO));
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AgregarUsuarioEncargado` (`Idusuario` INT, `Nombre` VARCHAR(45), `contrasenia` VARCHAR(45), `A_M` VARCHAR(45), `A_P` VARCHAR(45), `Direccion` VARCHAR(45), `Telefono` VARCHAR(45))  BEGIN
 INSERT INTO USUARIO(idUsuario,contrasenia,nombre,a_materno,a_paterno,direccion,telefono)
 VALUES(Idusuario,contrasenia,Nombre,A_M,A_P,Direccion,Telefono);
-INSERT INTO encargado(idEncargado,idUsuario)
-VALUES((SELECT MAX(idUsuario) FROM USUARIO),(SELECT MAX(idUsuario) FROM USUARIO));
+INSERT INTO encargado(idEncargado)
+VALUES((SELECT MAX(idUsuario) FROM USUARIO));
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AgregarUsuarioGerente` (`Idusuario` INT, `Nombre` VARCHAR(45), `contrasenia` VARCHAR(45), `A_M` VARCHAR(45), `A_P` VARCHAR(45), `Direccion` VARCHAR(45), `Telefono` VARCHAR(45))  BEGIN
 INSERT INTO USUARIO(idUsuario,contrasenia,nombre,a_materno,a_paterno,direccion,telefono)
 VALUES(Idusuario,contrasenia,Nombre,A_M,A_P,Direccion,Telefono);
-INSERT INTO gerente(idGerente,idUsuario)
-VALUES((SELECT MAX(idUsuario) FROM USUARIO),(SELECT MAX(idUsuario) FROM USUARIO));
+INSERT INTO gerente(idGerente)
+VALUES((SELECT MAX(idUsuario) FROM USUARIO));
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AgregarUsuarioMesero` (`Idusuario` INT, `Nombre` VARCHAR(45), `contrasenia` VARCHAR(45), `A_M` VARCHAR(45), `A_P` VARCHAR(45), `Direccion` VARCHAR(45), `Telefono` VARCHAR(45))  BEGIN
 INSERT INTO USUARIO(idUsuario,contrasenia,nombre,a_materno,a_paterno,direccion,telefono)
 VALUES(Idusuario,contrasenia,Nombre,A_M,A_P,Direccion,Telefono);
-INSERT INTO Mesero(idMesero,idUsuario)
-VALUES((SELECT MAX(idUsuario) FROM USUARIO),(SELECT MAX(idUsuario) FROM USUARIO));
+INSERT INTO Mesero(idMesero)
+VALUES((SELECT MAX(idUsuario) FROM USUARIO));
 END$$
 
 DELIMITER ;
@@ -81,7 +82,15 @@ CREATE TABLE `categoria_menu` (
   `nombre_categoria` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `categoria_menu` VALUES (1, "Entradas"), (2, "Plato fuerte"), (3, "Postre"), (4, "Bebidas");
+--
+-- Volcado de datos para la tabla `categoria_menu`
+--
+
+INSERT INTO `categoria_menu` (`idCategoria`, `nombre_categoria`) VALUES
+(1, 'Entradas'),
+(2, 'Plato fuerte'),
+(3, 'Postre'),
+(4, 'Bebidas');
 
 -- --------------------------------------------------------
 
@@ -95,6 +104,22 @@ CREATE TABLE `detalleorden` (
   `idOrden` int(11) NOT NULL,
   `idPlatillo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `detalleorden`
+--
+
+INSERT INTO `detalleorden` (`cantidad`, `subtotal`, `idOrden`, `idPlatillo`) VALUES
+(9, 230, 1, 3),
+(1, 20, 1, 4),
+(3, 60, 1, 2),
+(2, 40, 1, 10),
+(1, 20, 1, 14),
+(5, 100, 1, 1),
+(3, 60, 1, 2),
+(1, 20, 2, 1),
+(1, 30, 2, 3),
+(1, 20, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -110,20 +135,25 @@ CREATE TABLE `elemento_menu` (
   `idCategoria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `elemento_menu` VALUES (1, "Sopa de verdura", "Sopa de verduras de jitomate", 20, 1),
-(2, "Sopa de pasta", "Sopa de pasta de jitomate", 20, 1),
-(3, "Spaghetti rojo", "Spaghetti seco en salsa de jitomate", 30, 1),
-(4, "Consome de pollo", "Consome de caldo de pollo con verduras", 20, 1),
-(5, "Milanesa", "Milanesa de puerco acompañada con ensalada y papas fritas", 35, 2),
-(6, "Mole verde", "Mole verde de carne de puerco", 35, 2),
-(7, "Mole poblano", "Mole poblano picoso con pollo", 40, 2),
-(8, "Mosaico", "Gelatina de mosaico con crema", 20, 3),
-(9, "Fresas con crema", "Fresas con cream acida y azucar", 15, 3),
-(10, "Flan", "Rebanada de flan napolitano", 20, 3),
-(11, "Vaso de agua", "Vaso de agua de sabor del dia", 10, 4),
-(12, "Litro de agua", "Litro de agua de sabor del dia", 25, 4),
-(13, "Refresco lata", "Refresco de lata 355 ml", 15, 4),
-(14, "Refresco envase", "Refresco de envase 600 ml", 20, 4);
+--
+-- Volcado de datos para la tabla `elemento_menu`
+--
+
+INSERT INTO `elemento_menu` (`idPlatillo`, `nombre_platillo`, `descripcion`, `precio`, `idCategoria`) VALUES
+(1, 'Sopa de verdura', 'Sopa de verduras de jitomate', 20, 1),
+(2, 'Sopa de pasta', 'Sopa de pasta de jitomate', 20, 1),
+(3, 'Spaghetti rojo', 'Spaghetti seco en salsa de jitomate', 30, 1),
+(4, 'Consome de pollo', 'Consome de caldo de pollo con verduras', 20, 1),
+(5, 'Milanesa', 'Milanesa de puerco acompañada con ensalada y papas fritas', 35, 2),
+(6, 'Mole verde', 'Mole verde de carne de puerco', 35, 2),
+(7, 'Mole poblano', 'Mole poblano picoso con pollo', 40, 2),
+(8, 'Mosaico', 'Gelatina de mosaico con crema', 20, 3),
+(9, 'Fresas con crema', 'Fresas con cream acida y azucar', 15, 3),
+(10, 'Flan', 'Rebanada de flan napolitano', 20, 3),
+(11, 'Vaso de agua', 'Vaso de agua de sabor del dia', 10, 4),
+(12, 'Litro de agua', 'Litro de agua de sabor del dia', 25, 4),
+(13, 'Refresco lata', 'Refresco de lata 355 ml', 15, 4),
+(14, 'Refresco envase', 'Refresco de envase 600 ml', 20, 4);
 
 -- --------------------------------------------------------
 
@@ -132,16 +162,15 @@ INSERT INTO `elemento_menu` VALUES (1, "Sopa de verdura", "Sopa de verduras de j
 --
 
 CREATE TABLE `encargado` (
-  `idEncargado` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL
+  `idEncargado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `encargado`
 --
 
-INSERT INTO `encargado` (`idEncargado`, `idUsuario`) VALUES
-(1, 1);
+INSERT INTO `encargado` (`idEncargado`) VALUES
+(1);
 
 -- --------------------------------------------------------
 
@@ -161,16 +190,15 @@ CREATE TABLE `fotos` (
 --
 
 CREATE TABLE `gerente` (
-  `idGerente` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL
+  `idGerente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `gerente`
 --
 
-INSERT INTO `gerente` (`idGerente`, `idUsuario`) VALUES
-(1, 2);
+INSERT INTO `gerente` (`idGerente`) VALUES
+(2);
 
 -- --------------------------------------------------------
 
@@ -217,7 +245,6 @@ INSERT INTO `mesa` (`idMesa`, `estado`, `idZona`) VALUES
 
 CREATE TABLE `mesero` (
   `idMesero` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL,
   `idZona` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -225,9 +252,9 @@ CREATE TABLE `mesero` (
 -- Volcado de datos para la tabla `mesero`
 --
 
-INSERT INTO `mesero` (`idMesero`, `idUsuario`, `idZona`) VALUES
-(1, 3, 2),
-(202, 202, NULL);
+INSERT INTO `mesero` (`idMesero`, `idZona`) VALUES
+(3, 2),
+(202, 2);
 
 -- --------------------------------------------------------
 
@@ -238,11 +265,44 @@ INSERT INTO `mesero` (`idMesero`, `idUsuario`, `idZona`) VALUES
 CREATE TABLE `orden` (
   `idOrden` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `total` float NOT NULL,
+  `total` float DEFAULT NULL,
   `idMesero` int(11) NOT NULL,
-  `idCajero` int(11) NOT NULL,
+  `idCajero` int(11) DEFAULT NULL,
   `idMesa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `orden`
+--
+
+INSERT INTO `orden` (`idOrden`, `fecha`, `total`, `idMesero`, `idCajero`, `idMesa`) VALUES
+(1, '2021-02-10', NULL, 202, NULL, 1),
+(2, '2021-02-10', NULL, 3, NULL, 2),
+(3, '2021-02-10', NULL, 3, NULL, 1),
+(4, '2021-02-10', NULL, 3, NULL, 1),
+(5, '2021-02-10', NULL, 3, NULL, 1),
+(6, '2021-02-10', NULL, 3, NULL, 1),
+(7, '2021-02-10', NULL, 3, NULL, 1),
+(8, '2021-02-10', NULL, 3, NULL, 1),
+(9, '2021-02-10', NULL, 3, NULL, 1),
+(10, '2021-02-10', NULL, 3, NULL, 1),
+(11, '2021-02-10', NULL, 3, NULL, 1),
+(12, '2021-02-10', NULL, 3, NULL, 1),
+(13, '2021-02-10', NULL, 3, NULL, 1),
+(14, '2021-02-10', NULL, 3, NULL, 1),
+(15, '2021-02-10', NULL, 3, NULL, 1),
+(16, '2021-02-10', NULL, 3, NULL, 1),
+(17, '2021-02-10', NULL, 3, NULL, 1),
+(18, '2021-02-10', NULL, 3, NULL, 1),
+(19, '2021-02-10', NULL, 3, NULL, 1),
+(20, '2021-02-10', NULL, 3, NULL, 1),
+(21, '2021-02-10', NULL, 3, NULL, 1),
+(22, '2021-02-10', NULL, 3, NULL, 1),
+(23, '2021-02-10', NULL, 3, NULL, 1),
+(24, '2021-02-10', NULL, 3, NULL, 1),
+(25, '2021-02-10', NULL, 3, NULL, 1),
+(26, '2021-02-10', NULL, 3, NULL, 1),
+(27, '2021-02-10', NULL, 3, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -300,7 +360,7 @@ INSERT INTO `zona` (`idZona`, `capacidad`) VALUES
 --
 ALTER TABLE `cajero`
   ADD PRIMARY KEY (`idCajero`),
-  ADD KEY `fk_idUsuario` (`idUsuario`);
+  ADD KEY `fk_idUsuario` (`idCajero`);
 
 --
 -- Indices de la tabla `categoria_menu`
@@ -326,15 +386,15 @@ ALTER TABLE `elemento_menu`
 -- Indices de la tabla `encargado`
 --
 ALTER TABLE `encargado`
-  ADD PRIMARY KEY (`idEncargado`) USING BTREE,
-  ADD KEY `fk_idUsuario` (`idUsuario`);
+  ADD PRIMARY KEY (`idEncargado`),
+  ADD KEY `fk_idUsuario` (`idEncargado`);
 
 --
 -- Indices de la tabla `gerente`
 --
 ALTER TABLE `gerente`
   ADD PRIMARY KEY (`idGerente`),
-  ADD KEY `fk_idUsuario` (`idUsuario`);
+  ADD KEY `fk_idUsuario` (`idGerente`);
 
 --
 -- Indices de la tabla `inventario`
@@ -354,101 +414,24 @@ ALTER TABLE `mesa`
 --
 ALTER TABLE `mesero`
   ADD PRIMARY KEY (`idMesero`),
-  ADD KEY `fk_idUsuario` (`idUsuario`),
+  ADD KEY `fk_idUsuario` (`idMesero`),
   ADD KEY `idZona` (`idZona`);
 
 --
 -- Indices de la tabla `orden`
 --
 ALTER TABLE `orden`
-  ADD PRIMARY KEY (`idOrden`),
-  ADD KEY `fk_idMesero` (`idMesero`),
-  ADD KEY `fk_idCajero` (`idCajero`),
-  ADD KEY `fk_idMesa` (`idMesa`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`idUsuario`);
-
---
--- Indices de la tabla `zona`
---
-ALTER TABLE `zona`
-  ADD PRIMARY KEY (`idZona`);
+  ADD PRIMARY KEY (`idOrden`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `cajero`
---
-ALTER TABLE `cajero`
-  MODIFY `idCajero` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `gerente`
---
-ALTER TABLE `gerente`
-  MODIFY `idGerente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `cajero`
---
-ALTER TABLE `cajero`
-  ADD CONSTRAINT `cajero_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `detalleorden`
---
-ALTER TABLE `detalleorden`
-  ADD CONSTRAINT `detalleorden_ibfk_1` FOREIGN KEY (`idOrden`) REFERENCES `orden` (`idOrden`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `detalleorden_ibfk_2` FOREIGN KEY (`idPlatillo`) REFERENCES `elemento_menu` (`idPlatillo`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `elemento_menu`
---
-ALTER TABLE `elemento_menu`
-  ADD CONSTRAINT `elemento_menu_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria_menu` (`idCategoria`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `encargado`
---
-ALTER TABLE `encargado`
-  ADD CONSTRAINT `encargado_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `gerente`
---
-ALTER TABLE `gerente`
-  ADD CONSTRAINT `gerente_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `mesa`
---
-ALTER TABLE `mesa`
-  ADD CONSTRAINT `mesa_ibfk_1` FOREIGN KEY (`idZona`) REFERENCES `zona` (`idZona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `mesero`
---
-ALTER TABLE `mesero`
-  ADD CONSTRAINT `mesero_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `mesero_ibfk_2` FOREIGN KEY (`idZona`) REFERENCES `zona` (`idZona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `orden`
+-- AUTO_INCREMENT de la tabla `orden`
 --
 ALTER TABLE `orden`
-  ADD CONSTRAINT `orden_ibfk_1` FOREIGN KEY (`idMesero`) REFERENCES `mesero` (`idMesero`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `orden_ibfk_2` FOREIGN KEY (`idCajero`) REFERENCES `cajero` (`idCajero`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `orden_ibfk_3` FOREIGN KEY (`idMesa`) REFERENCES `mesa` (`idMesa`) ON DELETE CASCADE ON UPDATE CASCADE;
+  MODIFY `idOrden` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
