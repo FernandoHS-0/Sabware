@@ -31,6 +31,8 @@ private slots:
 
     void on_btnOrdenar_clicked();
 
+    void agregarElementoMenu(const int &cantidad);
+
 private:
     Ui::Mesero *ui;
     QTimer *timer;

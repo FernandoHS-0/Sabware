@@ -170,7 +170,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>413</height>
+        <height>401</height>
        </rect>
       </property>
       <attribute name="label">
@@ -194,7 +194,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>413</height>
+        <height>401</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -221,7 +221,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>413</height>
+        <height>401</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -248,7 +248,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>413</height>
+        <height>401</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -270,7 +270,7 @@ color: #F29F05;</string>
       </widget>
      </widget>
     </widget>
-    <widget class="QTableWidget" name="tableWidget">
+    <widget class="QTableWidget" name="tablaOrden">
      <property name="geometry">
       <rect>
        <x>400</x>
