@@ -31,7 +31,7 @@ private slots:
 
     void on_btnOrdenar_clicked();
 
-    void agregarElementoMenu(const int &cantidad);
+    void agregarElementoMenu(int cantidad);
 
 private:
     Ui::Mesero *ui;
