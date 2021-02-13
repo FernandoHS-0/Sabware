@@ -7,5 +7,6 @@
         <file>img/usuario.png</file>
         <file>img/asignarZona.png</file>
         <file>img/gestionUsuarios.png</file>
+        <file>img/tomarPedido.png</file>
     </qresource>
 </RCC>
