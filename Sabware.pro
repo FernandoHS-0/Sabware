@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        cajero.cpp \
         encargado.cpp \
         gerente.cpp \
         main.cpp \
@@ -32,12 +33,14 @@ SOURCES += \
         mesero.cpp
 
 HEADERS += \
+        cajero.h \
         encargado.h \
         gerente.h \
         inicio.h \
         mesero.h
 
 FORMS += \
+        cajero.ui \
         encargado.ui \
         gerente.ui \
         inicio.ui \
