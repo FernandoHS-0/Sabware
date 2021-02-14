@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QSpinBox>
 
+
 Mesero::Mesero(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Mesero)
@@ -49,6 +50,7 @@ Mesero::Mesero(QWidget *parent) :
             nRow++;
             nCol = 0;
         }
+
 
     }
 
@@ -174,11 +176,17 @@ void Mesero::on_btnMesa_clicked(){
     QPushButton * btnMes = dynamic_cast<QPushButton *>(sender());
     QSqlQuery insertOrder(dbconexion);
     QSqlQuery estadoMesa(dbconexion);
-    QString mesaactual;
+    QSqlQuery cambio(dbconexion);
+    QString ocu="ocupado";
 
     if(btnMes){
+
         ui->lblNoMesa->setText(btnMes->text());
-        mesAct = btnMes->objectName().toInt();
+
+        cambio.prepare("UPDATE mesa set estado='"+ocu+"' WHERE idMesa=:idM");
+        cambio.bindValue(":idM", mesAct);
+        cambio.exec();
+        btnMes->setStyleSheet("QPushButton{border-radius: 20px; background-color: #20CAFC; color: white; font: 12pt 'HelvLight'; width: 100px; height: 100px;} QPushButton:Hover{border: 3px solid #D92B04}");
         estadoMesa.prepare("SELECT IF(idCajero = NULL, 'FALSE', 'TRUE') FROM orden WHERE idMesa = :idM");
         estadoMesa.bindValue(":idM", mesAct);
         estadoMesa.exec();
@@ -205,6 +213,9 @@ void Mesero::on_btnMesa_clicked(){
                 ui->tablaOrden->setColumnWidth(0, 240);
                 ui->tablaOrden->setColumnWidth(1, 65);
                 ui->tablaOrden->setColumnWidth(2, 65);
+
+
+
             }
         }else{
             insertOrder.prepare("insert into orden(fecha,idMesero,idMesa)values(curdate(),3,:mesa);");
@@ -339,5 +350,15 @@ void Mesero::agregarElementoMenu(int cantidad){
 
 
     }
+
+}
+
+void Mesero::on_btnCancelar_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void Mesero::on_btnOrden_clicked()
+{
 
 }
