@@ -8,6 +8,7 @@
 #include "encargado.h"
 #include "gerente.h"
 #include "mesero.h"
+#include "cajero.h"
 
 namespace Ui {
 class Inicio;
@@ -30,6 +31,7 @@ private:
     Encargado *enc;
     Gerente *gere;
     Mesero *mes;
+    Cajero *caj;
 };
 
 #endif // INICIO_H

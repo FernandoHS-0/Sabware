@@ -21,10 +21,13 @@ public:
 public slots:
     void reloj();
 
+private slots:
+    void verOrdenes();
 private:
     Ui::Cajero *ui;
     QTimer *timer;
     QSqlDatabase dbconexion;
+    int noMesa;
 };
 
 #endif // CAJERO_H
