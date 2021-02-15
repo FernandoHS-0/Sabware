@@ -29,7 +29,8 @@ Mesero::Mesero(QWidget *parent) :
     getZona.next();
     int zonaAct = getZona.value(0).toInt();
     qDebug() << "Zona: " << zonaAct;
-    QSqlQuery getMesas(dbconexion);
+    QSqlQuery getMesas(dbconexion), getEstado(dbconexion);
+    getEstado.prepare("SELECT estado FROM mesa where idMesa = :noM;");
     getMesas.prepare("SELECT count(idMesa) FROM mesa WHERE idZona = :idZ;");
     getMesas.bindValue(":idZ", zonaAct);
     getMesas.exec();
@@ -41,7 +42,15 @@ Mesero::Mesero(QWidget *parent) :
         QPushButton * btnMesa = new QPushButton;
         btnMesa->setObjectName(nombre);
         btnMesa->setText("Mesa " + nombre);
-        btnMesa->setStyleSheet("QPushButton{border-radius: 20px; background-color: #D96704; color: white; font: 12pt 'HelvLight'; width: 100px; height: 100px;} QPushButton:Hover{border: 3px solid #D92B04}");
+        getEstado.bindValue(":noM", i+1);
+        getEstado.exec();
+        getEstado.next();
+        QString est = getEstado.value(0).toString();
+        if(est == "libre"){
+            btnMesa->setStyleSheet("QPushButton{border-radius: 20px; background-color: #D96704; color: white; font: 12pt 'HelvLight'; width: 100px; height: 100px;} QPushButton:Hover{border: 3px solid #D92B04}");
+        }else{
+            btnMesa->setStyleSheet("QPushButton{border-radius: 20px; background-color: #D92B04; color: white; font: 12pt 'HelvLight'; width: 100px; height: 100px;} QPushButton:Hover{border: 3px solid #D92B04}");
+        }
         ui->gridLayout->addWidget(btnMesa, nRow, nCol, Qt::AlignHCenter);
         connect(btnMesa, SIGNAL(clicked()), SLOT(on_btnMesa_clicked()));
         nCol++;
@@ -172,15 +181,16 @@ void Mesero::on_btnSalir_clicked()
 
 void Mesero::on_btnMesa_clicked(){
     QPushButton * btnMes = dynamic_cast<QPushButton *>(sender());
-    QSqlQuery insertOrder(dbconexion);
+    QSqlQuery insertOrder(dbconexion), actEstado(dbconexion);
     QSqlQuery estadoMesa(dbconexion),estadoMesa1(dbconexion);
     QString mesaactual;
 
     if(btnMes){
+        actEstado.exec("UPDATE mesa SET estado = 'ocupado' WHERE idMesa = "+mesaactual+";");
+        btnMes->setStyleSheet("QPushButton{border-radius: 20px; background-color: #D92B04; color: white; font: 12pt 'HelvLight'; width: 100px; height: 100px;} QPushButton:Hover{border: 3px solid #D92B04}");
         ui->lblNoMesa->setText(btnMes->text());
         mesAct = btnMes->objectName().toInt();
-
-       estadoMesa.prepare("SELECT IF(idCajero = null, 'FALSE', 'TRUE') FROM orden WHERE idMesa = :idM");
+        estadoMesa.prepare("SELECT IF(idCajero = null, 'FALSE', 'TRUE') FROM orden WHERE idMesa = :idM");
         estadoMesa.bindValue(":idM", mesAct);
         estadoMesa.exec();
         estadoMesa.next();
@@ -374,5 +384,12 @@ void Mesero::on_btnCobrar_clicked()
         ui->stackedWidget->setCurrentIndex(0);
         ui->tablaOrden->clearContents();
         ui->tablaOrden->model()->removeRows(0, ui->tablaOrden->rowCount());
+
+        QSqlQuery actEstado(dbconexion);
+        actEstado.prepare("UPDATE mesa SET estado = 'libre' WHERE idMesa = :idMes;");
+        actEstado.bindValue(":idMes", mesAct);
+        actEstado.exec();
+        this->update();
+
     }
 }
