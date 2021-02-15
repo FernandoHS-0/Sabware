@@ -170,7 +170,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>413</height>
+        <height>401</height>
        </rect>
       </property>
       <attribute name="label">
@@ -194,7 +194,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>413</height>
+        <height>401</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -221,7 +221,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>413</height>
+        <height>401</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -248,7 +248,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>413</height>
+        <height>401</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -273,8 +273,8 @@ color: #F29F05;</string>
     <widget class="QTableWidget" name="tablaOrden">
      <property name="geometry">
       <rect>
-       <x>400</x>
-       <y>120</y>
+       <x>410</x>
+       <y>60</y>
        <width>390</width>
        <height>341</height>
       </rect>
@@ -321,8 +321,8 @@ color: #D96704;</string>
     <widget class="QPushButton" name="btnOrdenar">
      <property name="geometry">
       <rect>
-       <x>470</x>
-       <y>470</y>
+       <x>460</x>
+       <y>410</y>
        <width>131</width>
        <height>41</height>
       </rect>
@@ -346,8 +346,8 @@ color: #D96704;</string>
     <widget class="QPushButton" name="btnCancelar">
      <property name="geometry">
       <rect>
-       <x>610</x>
-       <y>470</y>
+       <x>640</x>
+       <y>410</y>
        <width>131</width>
        <height>41</height>
       </rect>
@@ -366,6 +366,31 @@ color: #D96704;</string>
      </property>
      <property name="text">
       <string>Cancelar</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnCobrar">
+     <property name="geometry">
+      <rect>
+       <x>560</x>
+       <y>470</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#btnCobrar{
+	background-color: #f7d708;
+	border: none;
+	font: 16pt &quot;HelvLight&quot;;
+	color: black;
+}
+
+#btnCobrar:Hover{
+	background-color: #A9BF04;
+}</string>
+     </property>
+     <property name="text">
+      <string>Cobrar</string>
      </property>
     </widget>
    </widget>

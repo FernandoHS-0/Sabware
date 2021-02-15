@@ -33,6 +33,8 @@ private slots:
 
     void agregarElementoMenu(int cantidad);
 
+    void on_btnCobrar_clicked();
+
 private:
     Ui::Mesero *ui;
     QTimer *timer;
