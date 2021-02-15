@@ -87,3 +87,8 @@ void Cajero::reloj(){
     QString horaTexto = hora.toString("hh:mm");
     ui->relojD->setText(horaTexto);
 }
+
+void Cajero::on_btnSalir_clicked()
+{
+    this->close();
+}

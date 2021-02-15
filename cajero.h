@@ -23,6 +23,8 @@ public slots:
 
 private slots:
     void verOrdenes();
+    void on_btnSalir_clicked();
+
 private:
     Ui::Cajero *ui;
     QTimer *timer;
