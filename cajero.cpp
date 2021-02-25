@@ -24,7 +24,7 @@ Cajero::Cajero(QWidget *parent) :
     }
 
     QSqlQuery ordenes(dbconexion);
-    ordenes.prepare("SELECT COUNT(`idOrden`) FROM `orden` WHERE `idCajero`=4");
+    ordenes.prepare("SELECT COUNT(`idOrden`) FROM `orden` WHERE `idCajero` is null and estadoFisico = 0");
     ordenes.exec();
     ordenes.next();
     int col=0, fila=0;
@@ -34,7 +34,7 @@ Cajero::Cajero(QWidget *parent) :
         QPushButton * orden = new QPushButton;
         orden->setObjectName(numO);
         orden->setText("Mesa "+numO);
-        orden->setStyleSheet("QPushButton{border-radius: 20px; background-color: #D96704; color: white; font: 12pt 'HelvLight'; width: 100px; height: 100px;} QPushButton:Hover{border: 3px solid #D92B04}");
+        orden->setStyleSheet("QPushButton{border-radius: 20px; background-color: #f8e44b; color: white; font: 12pt 'HelvLight'; width: 100px; height: 100px;} QPushButton:Hover{border: 3px solid #D92B04}");
         ui->gridLayout_2->addWidget(orden,fila,col,Qt::AlignCenter);
         connect(orden, SIGNAL(clicked()), SLOT(verOrdenes()));
         col++;
@@ -58,10 +58,12 @@ void Cajero::verOrdenes(){
     QSqlQuery mesa(dbconexion);
     QSqlQuery detalleO(dbconexion);
     QSqlQuery total(dbconexion);
+    ui->tableWidget->clearContents();
+    ui->tableWidget->model()->removeRows(0, ui->tableWidget->rowCount());
     if(mesaO){
         ui->label_3->setText(mesaO->text());
         noMesa = mesaO->objectName().toInt();
-        detalleO.prepare("SELECT elemento_menu.idPlatillo,elemento_menu.nombre_platillo,orden.idMesa,orden.idOrden,detalleorden.cantidad FROM `detalleorden` INNER JOIN orden ON detalleorden.idOrden=orden.idOrden INNER JOIN elemento_menu ON detalleorden.idPlatillo=elemento_menu.idPlatillo WHERE orden.idMesa='"+QString::number(noMesa)+"'");
+        detalleO.prepare("SELECT elemento_menu.idPlatillo,elemento_menu.nombre_platillo,orden.idMesa,orden.idOrden,detalleorden.cantidad FROM `detalleorden` INNER JOIN orden ON detalleorden.idOrden=orden.idOrden INNER JOIN elemento_menu ON detalleorden.idPlatillo=elemento_menu.idPlatillo WHERE orden.idMesa='"+QString::number(noMesa)+"'and orden.idCajero is null");
         detalleO.exec();
         while (detalleO.next()) {
             QString nombre = detalleO.value(1).toString();
@@ -91,4 +93,35 @@ void Cajero::reloj(){
 void Cajero::on_btnSalir_clicked()
 {
     this->close();
+}
+
+void Cajero::on_pushButton_3_clicked()
+{
+
+    QMessageBox conf;
+    conf.setText("Confirmar orden");
+    QAbstractButton * btnAcp = conf.addButton("Aceptar", QMessageBox::AcceptRole);
+    conf.addButton("Cancelar", QMessageBox::AcceptRole);
+    conf.setIcon(QMessageBox::Information);
+    conf.setWindowTitle("Confirmar orden");
+    conf.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
+    conf.exec();
+    if(conf.clickedButton() == btnAcp){
+        QSqlQuery marcarLista(dbconexion),obtenenerOrden(dbconexion);
+        obtenenerOrden.prepare("select idOrden from orden where idMesa=:mes and idCajero is null and estadoFisico = 0;");
+        obtenenerOrden.bindValue(":mes",noMesa);
+        obtenenerOrden.exec();
+        obtenenerOrden.next();
+        QString orden;
+        orden = obtenenerOrden.value(0).toString();
+        qDebug()<<"la orden es"+orden+"";
+        marcarLista.prepare("update orden set estadoFisico = 1 where idOrden ="+orden+";");
+        marcarLista.exec();
+        //ui->gridLayoutWidget_2->setVisible(false);
+        ui->tableWidget->clearContents();
+        ui->tableWidget->model()->removeRows(0, ui->tableWidget->rowCount());
+
+
+}
+
 }

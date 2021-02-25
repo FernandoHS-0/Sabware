@@ -25,6 +25,8 @@ private slots:
     void verOrdenes();
     void on_btnSalir_clicked();
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Cajero *ui;
     QTimer *timer;

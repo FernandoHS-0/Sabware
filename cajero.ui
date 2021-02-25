@@ -240,37 +240,12 @@ color: #D96704;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
-   <property name="geometry">
-    <rect>
-     <x>640</x>
-     <y>540</y>
-     <width>81</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton{
-	border: none;
-	background-color: #4F7302;
-	font: 12pt &quot;HelvLight&quot;;
-	color: white;
-}
-
-QPushButton:Hover{
-	background-color: #D96704;
-}</string>
-   </property>
-   <property name="text">
-    <string>Cancelar</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>740</x>
-     <y>540</y>
-     <width>81</width>
+     <x>580</x>
+     <y>530</y>
+     <width>161</width>
      <height>31</height>
     </rect>
    </property>
@@ -287,7 +262,7 @@ QPushButton:Hover{
 }</string>
    </property>
    <property name="text">
-    <string>Aceptar</string>
+    <string>ORDEN LISTA</string>
    </property>
   </widget>
  </widget>
