@@ -30,14 +30,16 @@ SOURCES += \
         gerente.cpp \
         main.cpp \
         inicio.cpp \
-        mesero.cpp
+        mesero.cpp \
+        platillos.cpp
 
 HEADERS += \
         cajero.h \
         encargado.h \
         gerente.h \
         inicio.h \
-        mesero.h
+        mesero.h \
+        platillos.h
 
 FORMS += \
         cajero.ui \
