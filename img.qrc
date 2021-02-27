@@ -9,5 +9,7 @@
         <file>img/gestionUsuarios.png</file>
         <file>img/tomarPedido.png</file>
         <file>img/recibirPedidos.png</file>
+        <file>img/dolar.png</file>
+        <file>img/tarjeta-de-credito.png</file>
     </qresource>
 </RCC>

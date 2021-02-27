@@ -36,5 +36,5 @@ void Inicio::on_pushButton_2_clicked()
     }else {
         qDebug() << "Error en el login";
     }
-    conexion.close();
+    //conexion.close();
 }
