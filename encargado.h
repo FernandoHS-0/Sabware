@@ -6,6 +6,10 @@
 #include <QSql>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QDebug>
+#include <string>
+#include <QSortFilterProxyModel>
+#include <QSqlQueryModel>
 
 namespace Ui {
 class Encargado;
@@ -29,6 +33,10 @@ private slots:
     void on_btnGestionUsr_clicked();
 
     void on_btnAsigZ_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::Encargado *ui;
