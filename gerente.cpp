@@ -368,7 +368,7 @@ void Gerente::on_btnGuardar_2_clicked()
     int cantMesas = ui->lnCantidad->text().toInt();
     QString nombre = ui->lnNombre->text();
     QSqlQuery guardar(dconexion);
-    guardar.prepare("insert into zona(capacidad,nombre) values(:cant,:nom);");
+    guardar.prepare("INSERT INTO zona(idZona,capacidad,nombre) SELECT MAX(idZona) + 1, :cant, :nom FROM zona;");
     guardar.bindValue(":cant", cantMesas);
     guardar.bindValue(":nom",nombre);
     qDebug()<<cantMesas;
