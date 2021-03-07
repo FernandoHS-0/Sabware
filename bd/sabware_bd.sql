@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 11-02-2021 a las 05:30:28
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 02-03-2021 a las 23:14:24
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,10 +22,11 @@ SET time_zone = "+00:00";
 -- Base de datos: `sabware_bd`
 --
 
-DROP DATABASE IF EXISTS `sabware_bd`;
-CREATE DATABASE `sabware_bd`;
+DROP DATABASE IF EXISTS sabware_bd;
+CREATE DATABASE sabware_bd;
 
-USE `sabware_bd`;
+USE sabware_bd;
+
 
 DELIMITER $$
 --
@@ -67,9 +69,15 @@ DELIMITER ;
 --
 
 CREATE TABLE `cajero` (
-  `idCajero` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL
+  `idCajero` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `cajero`
+--
+
+INSERT INTO `cajero` (`idCajero`) VALUES
+(4);
 
 -- --------------------------------------------------------
 
@@ -110,16 +118,11 @@ CREATE TABLE `detalleorden` (
 --
 
 INSERT INTO `detalleorden` (`cantidad`, `subtotal`, `idOrden`, `idPlatillo`) VALUES
-(9, 230, 1, 3),
-(1, 20, 1, 4),
-(3, 60, 1, 2),
-(2, 40, 1, 10),
-(1, 20, 1, 14),
-(5, 100, 1, 1),
-(3, 60, 1, 2),
-(1, 20, 2, 1),
-(1, 30, 2, 3),
-(1, 20, 2, 4);
+(4, 80, 1, 3),
+(4, 80, 1, 2),
+(2, 40, 1, 5),
+(2, 40, 2, 3),
+(5, 100, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -268,41 +271,18 @@ CREATE TABLE `orden` (
   `total` float DEFAULT NULL,
   `idMesero` int(11) NOT NULL,
   `idCajero` int(11) DEFAULT NULL,
-  `idMesa` int(11) NOT NULL
+  `idMesa` int(11) NOT NULL,
+  `estadoFiscal` int(11) DEFAULT 0,
+  `estadoFisico` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `orden`
 --
 
-INSERT INTO `orden` (`idOrden`, `fecha`, `total`, `idMesero`, `idCajero`, `idMesa`) VALUES
-(1, '2021-02-10', NULL, 202, NULL, 1),
-(2, '2021-02-10', NULL, 3, NULL, 2),
-(3, '2021-02-10', NULL, 3, NULL, 1),
-(4, '2021-02-10', NULL, 3, NULL, 1),
-(5, '2021-02-10', NULL, 3, NULL, 1),
-(6, '2021-02-10', NULL, 3, NULL, 1),
-(7, '2021-02-10', NULL, 3, NULL, 1),
-(8, '2021-02-10', NULL, 3, NULL, 1),
-(9, '2021-02-10', NULL, 3, NULL, 1),
-(10, '2021-02-10', NULL, 3, NULL, 1),
-(11, '2021-02-10', NULL, 3, NULL, 1),
-(12, '2021-02-10', NULL, 3, NULL, 1),
-(13, '2021-02-10', NULL, 3, NULL, 1),
-(14, '2021-02-10', NULL, 3, NULL, 1),
-(15, '2021-02-10', NULL, 3, NULL, 1),
-(16, '2021-02-10', NULL, 3, NULL, 1),
-(17, '2021-02-10', NULL, 3, NULL, 1),
-(18, '2021-02-10', NULL, 3, NULL, 1),
-(19, '2021-02-10', NULL, 3, NULL, 1),
-(20, '2021-02-10', NULL, 3, NULL, 1),
-(21, '2021-02-10', NULL, 3, NULL, 1),
-(22, '2021-02-10', NULL, 3, NULL, 1),
-(23, '2021-02-10', NULL, 3, NULL, 1),
-(24, '2021-02-10', NULL, 3, NULL, 1),
-(25, '2021-02-10', NULL, 3, NULL, 1),
-(26, '2021-02-10', NULL, 3, NULL, 1),
-(27, '2021-02-10', NULL, 3, NULL, 2);
+INSERT INTO `orden` (`idOrden`, `fecha`, `total`, `idMesero`, `idCajero`, `idMesa`, `estadoFiscal`, `estadoFisico`) VALUES
+(1, '2021-02-25', NULL, 202, NULL, 1, 0, 1),
+(2, '2021-02-25', NULL, 202, NULL, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -339,17 +319,19 @@ INSERT INTO `usuario` (`idUsuario`, `contrasenia`, `nombre`, `a_materno`, `a_pat
 
 CREATE TABLE `zona` (
   `idZona` int(11) NOT NULL,
-  `capacidad` int(11) NOT NULL
+  `capacidad` int(11) NOT NULL,
+  `nombre` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `zona`
 --
 
-INSERT INTO `zona` (`idZona`, `capacidad`) VALUES
-(1, 5),
-(2, 5),
-(3, 5);
+INSERT INTO `zona` (`idZona`, `capacidad`, `nombre`) VALUES
+(1, 8, 'saul'),
+(2, 15, 'Pedro'),
+(3, 8, '+nombreZona+'),
+(4, 10, 'Jesus');
 
 --
 -- Índices para tablas volcadas
@@ -424,6 +406,12 @@ ALTER TABLE `orden`
   ADD PRIMARY KEY (`idOrden`);
 
 --
+-- Indices de la tabla `zona`
+--
+ALTER TABLE `zona`
+  ADD PRIMARY KEY (`idZona`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -431,7 +419,13 @@ ALTER TABLE `orden`
 -- AUTO_INCREMENT de la tabla `orden`
 --
 ALTER TABLE `orden`
-  MODIFY `idOrden` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idOrden` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `zona`
+--
+ALTER TABLE `zona`
+  MODIFY `idZona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

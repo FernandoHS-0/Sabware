@@ -19,6 +19,10 @@ public:
     ~Gerente();
 public slots:
     void reloj();
+    void cargarZona();
+    void actualizarZona();
+    void on_btnGuardar_clicked();
+
 
 
 private slots:
@@ -32,10 +36,25 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_btnZona_clicked();
+
+    void on_modificarZona_clicked();
+
+
+    void on_eliminarZona_clicked();
+
+    void on_agregarZona_clicked();
+
+    void on_btnGuardar_2_clicked();
+
+    void on_btnGestionUsr_2_clicked();
+
 private:
     Ui::Gerente *ui;
     QTimer *timer;
     QSqlDatabase dconexion;
+    int noZona;
+
 
 };
 
