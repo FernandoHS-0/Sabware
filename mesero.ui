@@ -114,6 +114,9 @@ color: #F29F05;</string>
      <height>541</height>
     </rect>
    </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
    <widget class="QWidget" name="zona1">
     <widget class="QWidget" name="gridLayoutWidget">
      <property name="geometry">
