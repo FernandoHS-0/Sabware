@@ -129,7 +129,7 @@ color: #F29F05;</string>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="gridLayoutWidget">

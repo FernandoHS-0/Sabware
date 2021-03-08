@@ -21,6 +21,7 @@ class Encargado : public QWidget
 
 public:
     explicit Encargado(QWidget *parent = nullptr);
+    void llenarZonas();
     ~Encargado();
 public slots:
     void reloj();
@@ -37,6 +38,10 @@ private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_cmbMeseros_currentTextChanged(const QString &arg1);
+
+    void on_cmbZona_currentTextChanged(const QString &arg1);
 
 private:
     Ui::Encargado *ui;

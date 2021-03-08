@@ -17,6 +17,7 @@ Encargado::Encargado(QWidget *parent) :
     ui->usuario->setVisible(false);
     ui->totales->setVisible(false);
     ui->caja1->setVisible(false);
+    llenarZonas();
 }
 
 Encargado::~Encargado()
@@ -30,6 +31,24 @@ void Encargado::reloj(){
     ui->relojD->setText(horaTexto);
 }
 
+void Encargado::llenarZonas(){
+
+    ui->cmbZona->addItem("");
+    ui->cmbMeseros->addItem("");
+
+    QSqlQuery meseros(dbconexion);
+    meseros.exec("SELECT idMesero FROM mesero;");
+    while(meseros.next()){
+        ui->cmbMeseros->addItem(meseros.value(0).toString());
+    }
+
+    QSqlQuery zonas(dbconexion);
+    zonas.exec("SELECT idZona FROM zona;");
+    while(zonas.next()){
+        ui->cmbZona->addItem(zonas.value(0).toString());
+    }
+}
+
 void Encargado::on_btnSalir_clicked()
 {
     this->close();
@@ -37,25 +56,23 @@ void Encargado::on_btnSalir_clicked()
 
 void Encargado::on_btnGuardar_clicked()
 {
-    /*dbconexion.open();
-    QSqlQuery zona;
-    zona.prepare("UPDATE mesero SET idZona = :idZ WHERE idMesero = 1");
-    zona.bindValue(":idZ", ui->zonaF1->currentIndex());
-    if(zona.exec()){*/
-        QMessageBox mssg;
-        mssg.setText("Zonas actualizadas");
-        mssg.setIcon(QMessageBox::Information);
-        mssg.addButton(tr("Aceptar"),QMessageBox::YesRole);
-        mssg.exec();
-    /*}else {
-        qDebug() << "Error en el query";
+    QSqlQuery actZona(dbconexion);
+    actZona.prepare("UPDATE mesero SET idZona = " + ui->cmbZona->currentText() + " WHERE idMesero = " + ui->cmbMeseros->currentText() + ";");
+
+    if(actZona.exec()){
+        QMessageBox succ;
+        succ.setText("La zona ha sido actualizado correctamente");
+        succ.setIcon(QMessageBox::Information);
+        succ.setWindowTitle("Zona asignada");
+        succ.addButton("Aceptar", QMessageBox::AcceptRole);
+        succ.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
+        succ.exec();
     }
-    dbconexion.close();*/
 }
 
 void Encargado::on_btnGestionUsr_clicked()
 {
-    //ui->paginas->setCurrentIndex(1);
+    ui->paginas->setCurrentIndex(1);
 }
 
 void Encargado::on_btnAsigZ_clicked()
@@ -124,4 +141,20 @@ void Encargado::on_pushButton_2_clicked()
     guardar.setIcon(QMessageBox::Information);
     guardar.addButton(tr("Aceptar"),QMessageBox::YesRole);
     guardar.exec();
+}
+
+void Encargado::on_cmbMeseros_currentTextChanged(const QString &arg1)
+{
+    QSqlQuery nombreM(dbconexion);
+    nombreM.exec("SELECT u.nombre, u.a_materno, u.a_paterno FROM usuario AS u INNER JOIN mesero AS m on u.idUsuario = m.idMesero WHERE m.idMesero = " + arg1 + ";");
+    nombreM.next();
+    ui->nombreM->setText(nombreM.value(0).toString() + " " + nombreM.value(1).toString() + " " + nombreM.value(2).toString());
+}
+
+void Encargado::on_cmbZona_currentTextChanged(const QString &arg1)
+{
+    QSqlQuery nombreZ(dbconexion);
+    nombreZ.exec("SELECT nombre FROM zona WHERE idZona = " + arg1 + ";");
+    nombreZ.next();
+    ui->nombreZ->setText(nombreZ.value(0).toString());
 }
