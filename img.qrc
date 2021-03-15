@@ -11,5 +11,7 @@
         <file>img/recibirPedidos.png</file>
         <file>img/dolar.png</file>
         <file>img/tarjeta-de-credito.png</file>
+        <file>img/asignar_naranja.png</file>
+        <file>img/inventario.png</file>
     </qresource>
 </RCC>
