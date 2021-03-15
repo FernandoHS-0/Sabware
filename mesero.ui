@@ -115,7 +115,7 @@ color: #F29F05;</string>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="zona1">
     <widget class="QWidget" name="gridLayoutWidget">
@@ -173,7 +173,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>409</height>
+        <height>401</height>
        </rect>
       </property>
       <attribute name="label">
@@ -197,7 +197,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>409</height>
+        <height>401</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -224,7 +224,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>409</height>
+        <height>401</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -251,7 +251,7 @@ color: #F29F05;</string>
         <x>0</x>
         <y>0</y>
         <width>351</width>
-        <height>409</height>
+        <height>401</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -277,7 +277,7 @@ color: #F29F05;</string>
      <property name="geometry">
       <rect>
        <x>410</x>
-       <y>60</y>
+       <y>80</y>
        <width>390</width>
        <height>341</height>
       </rect>
@@ -307,7 +307,7 @@ color: #F29F05;</string>
     <widget class="QLabel" name="lblNoMesa">
      <property name="geometry">
       <rect>
-       <x>550</x>
+       <x>440</x>
        <y>30</y>
        <width>91</width>
        <height>41</height>
@@ -324,8 +324,8 @@ color: #D96704;</string>
     <widget class="QPushButton" name="btnOrdenar">
      <property name="geometry">
       <rect>
-       <x>460</x>
-       <y>410</y>
+       <x>450</x>
+       <y>440</y>
        <width>131</width>
        <height>41</height>
       </rect>
@@ -350,7 +350,7 @@ color: #D96704;</string>
      <property name="geometry">
       <rect>
        <x>640</x>
-       <y>410</y>
+       <y>440</y>
        <width>131</width>
        <height>41</height>
       </rect>
@@ -375,7 +375,7 @@ color: #D96704;</string>
      <property name="geometry">
       <rect>
        <x>560</x>
-       <y>470</y>
+       <y>490</y>
        <width>131</width>
        <height>41</height>
       </rect>
@@ -396,8 +396,62 @@ color: #D96704;</string>
       <string>Cobrar</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="cambiarMesa">
+     <property name="geometry">
+      <rect>
+       <x>590</x>
+       <y>10</y>
+       <width>221</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#cambiarMesa{
+	background-color: #D96704;
+	border: none;
+	font: 16pt &quot;HelvLight&quot;;
+	color: white;
+}
+
+#cambiarMesa:Hover{
+	background-color: #A9BF04;
+}</string>
+     </property>
+     <property name="text">
+      <string>Asignar a otro mesero</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QWidget" name="zona3"/>
+   <widget class="QWidget" name="zona3">
+    <widget class="QWidget" name="gridLayoutWidget_6">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>70</y>
+       <width>331</width>
+       <height>391</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3"/>
+    </widget>
+    <widget class="QLabel" name="lblNoMesa_2">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>20</y>
+       <width>281</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 18pt &quot;HelvLight&quot;;
+color: #D96704;</string>
+     </property>
+     <property name="text">
+      <string>Meseros Disponibles</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources>
