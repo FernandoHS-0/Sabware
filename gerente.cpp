@@ -405,6 +405,230 @@ void Gerente::on_btnGuardar_2_clicked()
 
 void Gerente::on_btnGestionUsr_2_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(2);
 
+}
+
+void Gerente::on_ingresos_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void Gerente::on_pushButton_4_clicked()
+{
+    info_ingresos.clear();
+    ingresos aux;
+    QSqlQuery cantidad;
+    QSqlQuery ingresosG;
+    QString ing;
+    int eleccion = ui->comboBox_2->currentIndex();
+    switch (eleccion) {
+    qDebug() << "switch";
+        case 1:{
+            qDebug() << "caso1";
+           if(cantidad.prepare("SELECT COUNT(`idOrden`) AS ordenes,usuario.nombre FROM `orden` INNER JOIN usuario ON orden.idCajero=usuario.idUsuario WHERE `fecha`='2021-03-14' GROUP BY `idCajero`")){
+               cantidad.exec();
+               qDebug() << "query";
+               while (cantidad.next()) {
+                   qDebug() << "querywhile";
+                   aux.setOrden(cantidad.value(0).toInt());
+                   aux.setCajero(cantidad.value(1).toString());
+                   info_ingresos.append(aux);
+               }
+           }
+           ingresosG.exec("SELECT SUM(`total`) AS ingresos FROM `orden` WHERE `fecha`='2021-03-14'");
+           ingresosG.next();
+           ing = ingresosG.value(0).toString();
+           ui->label_18->setText("$"+ing);
+           break;
+        }
+        case 2:{
+            qDebug() << "caso2";
+            if(cantidad.prepare("SELECT COUNT(`idOrden`) AS ordenes, usuario.nombre FROM `orden` INNER JOIN usuario ON orden.idCajero=usuario.idUsuario WHERE `fecha` BETWEEN '20210215' AND '20210220' GROUP BY `idCajero`")){
+                cantidad.exec();
+                qDebug() << "query2";
+                while (cantidad.next()) {
+                    qDebug() << "querywhile2";
+                    aux.setOrden(cantidad.value(0).toInt());
+                    aux.setCajero(cantidad.value(1).toString());
+                    info_ingresos.append(aux);
+                }
+            }
+            ingresosG.exec("SELECT SUM(`total`) AS ingresos FROM `orden` WHERE `fecha` BETWEEN '20210215' AND '20210220'");
+            ingresosG.next();
+            ing = ingresosG.value(0).toString();
+            ui->label_18->setText("$"+ing);
+            break;
+        }
+        case 3:{
+            qDebug() << "caso3";
+            if(cantidad.prepare("SELECT COUNT(`idOrden`) AS ordenes, usuario.nombre FROM `orden` INNER JOIN usuario ON orden.idCajero=usuario.idUsuario WHERE MONTH(fecha)=02 GROUP BY `idCajero`")){
+                cantidad.exec();
+                qDebug() << "query3";
+                while (cantidad.next()) {
+                    qDebug() << "querywhile3";
+                    aux.setOrden(cantidad.value(0).toInt());
+                    aux.setCajero(cantidad.value(1).toString());
+                    info_ingresos.append(aux);
+                }
+            }
+            ingresosG.exec("SELECT SUM(`total`) AS ingresos FROM `orden` WHERE MONTH(`fecha`)=02");
+            ingresosG.next();
+            ing = ingresosG.value(0).toString();
+            ui->label_18->setText("$"+ing);
+        }
+        case 0:{
+            break;
+        }
+    }
+
+    //GRAFICA
+    ingresos1 = info_ingresos;
+    series = new QVector<QBarSeries*>(ingresos1.size(),0);
+    for(int itrSerie=0;itrSerie<series->count();itrSerie++){
+        qDebug() << "for1";
+        series->operator[](itrSerie) = new QBarSeries();
+    }
+
+    //INICIALIZA LOS QBARSET
+    series_set = new QVector<QBarSet*>(ingresos1.size(),0);
+    for(int itrSerie=0;itrSerie<series_set->count();itrSerie++){
+        qDebug() << "for2";
+        series_set->operator[](itrSerie) = new QBarSet(ingresos1[itrSerie].getCajero());
+    }
+
+    for(int i = 0; i < ingresos1.size(); i++){
+        qDebug() << "for3";
+       series_set->at(i)->append(ingresos1[i].getOrden());
+    }
+
+
+    //INSERTA VALORES DE CADA QBARSET
+    for(int i = 0; i < ingresos1.size(); i++){
+        qDebug() << "for4";
+       series->at(i)->append(series_set->at(i));
+    }
+
+    //INICIALIZA EL QCHART
+    QChart *chart = new QChart();
+
+    //INSERTA CADA QBARSERIES AL QCHART
+    for(int itrSerie=0;itrSerie<series->count();itrSerie++)
+        chart->addSeries(series->at(itrSerie));
+
+    QStringList Encabezados;
+    for(int i = 0; i < ingresos1.size(); i++)
+        Encabezados << ingresos1[i].getCajero();
+
+    //INICIALIZA EJE X CON SUS RESPECTIVOS CAMPOS
+    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+    axisX->append(Encabezados);
+    chart->addAxis(axisX, Qt::AlignBottom);
+
+    //INICIALIZA EJE Y CON SUS RESPECTIVOS CAMPOS
+    QValueAxis *axisY = new QValueAxis();
+    chart->addAxis(axisY, Qt::AlignLeft);
+    axisY->setRange(0,26);
+    axisY->setTickCount(8);
+    axisY->setLabelFormat("%.0f");
+
+    //RECORRE EL VECTOR QBARSERIES PARA VINCULARLO CON EL EJE Y
+    for(int itrSerie=0;itrSerie<series->count();itrSerie++)
+        series->at(itrSerie)->attachAxis(axisY);
+
+    //PREPARA CONFIGURACION DE VISUALIZACION DEL QCHART
+    chart->setTitle("PROYECCIONES POR CAJERO");
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+    chart->legend()->setVisible(false);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+
+    //INICIALIZA LA VISTA DEL QCHARTVIEW COLOCANDO EL QCHART COMO PADRE
+    chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    //SE INSERTA EL QCHARTVIEW AL LAYOUT
+    ui->gridLayout->addWidget(chartView);
+    QString Diccionario = "";
+    for(int i = 0; i < ingresos1.size(); i++)
+    Diccionario += QString::number(i) + "- " + ingresos1[i].getOrden() + " -> " + ingresos1[i].getCajero() + "\n\n";
+}
+
+void Gerente::on_pushButton_5_clicked()
+{
+    QString format = ".pdf";
+    QString filename = QFileDialog::getSaveFileName(this,
+            "Elija el nombre", QDir::homePath(),"*.pdf");
+
+    filename.remove(format);
+    filename+=format;
+    ui->lineEdit_6->setText(filename);
+    //ui->ruta_lineEdit->setText(filename);
+    QString ing2;
+    int eleccion1 = ui->comboBox_2->currentIndex();
+    switch (eleccion1) {
+    case 1: ing2 = " POR DÍA"; break;
+    case 2: ing2 = " POR SEMANA"; break;
+    case 3: ing2 = " POR MES"; break;
+    }
+
+    QString nom;
+    if(ui->lineEdit_6->text() != ""){
+       nom = ui->lineEdit_6->text();
+       QDate aux = QDate::currentDate();
+       QString aux_fecha = aux.toString("yyyy/MM/dd");
+       QString ruta_img = ":/imagenes/img/Logo.png";
+       QString html = "<img src="+ ruta_img +" width=10px; opacity=0.4; filter=alpha(opacity=40))>"
+                      "<div align=right> <h4>"+ aux_fecha+" </h4></div>"
+                      "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"
+                      "<p align=center>Direccion: Av San claudio #2354</p>"
+                       "<p align=center>Direccion: Codigo postal: 76640 Ciudad: Puebla de Zaragoza</p>"
+                      "<p align=center>Telefono: 2224563267</p>"
+                     "<h1 align=left style='color:blue;'>REGISTRO DE INGRESOS"+ing2+"</h1> "
+                     "<div align=left>";
+       QString html_cuerpo = "";
+       for(int u = 0; u < ingresos1.size(); u++){
+          html_cuerpo = html_cuerpo + "<p>Nombre del cajero : " + ingresos1[u].getCajero()+"</p><hr>";
+       }
+       QSqlQuery ingresoF; QString ing3;
+       switch (eleccion1) {
+       case 1:{
+           ingresoF.exec("SELECT SUM(`total`) AS ingresos FROM `orden` WHERE `fecha`='2021-03-14'");
+           ingresoF.next();
+           ing3 = ingresoF.value(0).toString();
+           break;
+       }
+       case 2:{
+           ingresoF.exec("SELECT SUM(`total`) AS ingresos FROM `orden` WHERE `fecha` BETWEEN '20210215' AND '20210220'");
+           ingresoF.next();
+           ing3 = ingresoF.value(0).toString();
+           break;
+       }
+       case 3: {
+           ingresoF.exec("SELECT SUM(`total`) AS ingresos FROM `orden` WHERE MONTH(fecha)=02 ");
+           ingresoF.next();
+           ing3 = ingresoF.value(0).toString();
+           break;
+       }
+       }
+       QString html_final = "Total: $" +ing3+" <br>"+
+                        "DERECHOS RESERVADOS POR TRABAJADORES Y SOCIOS DE SYSTEM COMPANY";
+
+       QString html_completo = html + html_cuerpo + html_final;
+            QTextDocument document;
+            document.setHtml(html_completo);
+
+            QPrinter printer(QPrinter::PrinterResolution);
+            printer.setOutputFormat(QPrinter::PdfFormat);
+            printer.setPaperSize(QPrinter::A4);
+            printer.setOutputFileName(nom);
+            printer.setPageMargins(QMarginsF(15, 15, 15, 15));
+
+            document.print(&printer);
+
+           ui->lineEdit->clear();
+
+            QMessageBox::information(this,"Reporte","Reporte generado","Aceptar");
+    }else{
+          QMessageBox::information(this,"Factura","Debe elejir una carpeta de almacenamiento","Acpetar");
+         }
 }

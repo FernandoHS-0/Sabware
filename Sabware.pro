@@ -5,6 +5,9 @@
 #-------------------------------------------------
 
 QT       += core gui sql
+QT       += printsupport
+QT       += core gui
+QT       += core gui charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,6 +31,7 @@ SOURCES += \
         cajero.cpp \
         encargado.cpp \
         gerente.cpp \
+        ingresos.cpp \
         main.cpp \
         inicio.cpp \
         mesero.cpp \
@@ -37,6 +41,7 @@ HEADERS += \
         cajero.h \
         encargado.h \
         gerente.h \
+        ingresos.h \
         inicio.h \
         mesero.h \
         platillos.h
