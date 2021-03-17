@@ -19,6 +19,7 @@ Encargado::Encargado(QWidget *parent) :
     ui->usuario->setVisible(false);
     ui->totales->setVisible(false);
     ui->caja1->setVisible(false);
+    llenarTabla();
 }
 
 Encargado::~Encargado()
@@ -30,6 +31,30 @@ void Encargado::reloj(){
     QTime hora = QTime::currentTime();
     QString horaTexto = hora.toString("hh:mm");
     ui->relojD->setText(horaTexto);
+}
+
+void Encargado::llenarTabla(){
+    QSqlQuery *produc=new QSqlQuery;
+    ui->invetario_tableWidget->clear();
+    ui->invetario_tableWidget->setRowCount(0);
+    QStringList titulos;
+    titulos<<"IDProducto"<<"Nombre"<<"Descripcion"<<"Cantidad";
+    ui->invetario_tableWidget->setColumnCount(4);
+    ui->invetario_tableWidget->setHorizontalHeaderLabels(titulos);
+    if(produc->prepare("SELECT idProducto,nombre_pr,descripcion_pr,cantidad  FROM inventario"))
+    {
+        produc->exec();
+        int fila;
+        while(produc->next()){
+            ui->invetario_tableWidget->insertRow(ui->invetario_tableWidget->rowCount());
+            fila = ui->invetario_tableWidget->rowCount()-1;
+            ui->invetario_tableWidget->setItem(fila,0,new QTableWidgetItem(produc->value(0).toString()));
+            ui->invetario_tableWidget->setItem(fila,1,new QTableWidgetItem(produc->value(1).toString()));
+            ui->invetario_tableWidget->setItem(fila,2,new QTableWidgetItem(produc->value(2).toString()));
+            ui->invetario_tableWidget->setItem(fila,3,new QTableWidgetItem(produc->value(3).toString()));
+
+        }
+    }
 }
 
 void Encargado::on_btnSalir_clicked()
@@ -118,12 +143,13 @@ void Encargado::on_pushButton_clicked()
         ui->ingresos->setText(ingresos1);
     }
 }
-//SE VAN A HACER CAMBIOS EN LA BASE DE DATOS PARA PODER AL FINAL GENERAR BIEN EL CORTE Y UN REPORTE DEL MISMO
+
 void Encargado::on_pushButton_2_clicked()
 {
     QMessageBox guardar;
-    guardar.setText("Se han guardado los datos dados.");
+    guardar.setText("El producto ha sido añadido.");
     guardar.setIcon(QMessageBox::Information);
+    guardar.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
     guardar.addButton(tr("Aceptar"),QMessageBox::YesRole);
     guardar.exec();
 }
@@ -131,27 +157,7 @@ void Encargado::on_pushButton_2_clicked()
 void Encargado::on_btnInven_clicked()
 {
      ui->paginas->setCurrentIndex(2);
-     QSqlQuery *produc=new QSqlQuery;
-     ui->invetario_tableWidget->clear();
-     ui->invetario_tableWidget->setRowCount(0);
-     QStringList titulos;
-     titulos<<"IDProducto"<<"Nombre"<<"Descripcion"<<"Cantidad";
-     ui->invetario_tableWidget->setColumnCount(4);
-     ui->invetario_tableWidget->setHorizontalHeaderLabels(titulos);
-     if(produc->prepare("SELECT idProducto,nombre_pr,descripcion_pr,cantidad  FROM inventario"))
-     {
-         produc->exec();
-         int fila;
-         while(produc->next()){
-             ui->invetario_tableWidget->insertRow(ui->invetario_tableWidget->rowCount());
-             fila = ui->invetario_tableWidget->rowCount()-1;
-             ui->invetario_tableWidget->setItem(fila,0,new QTableWidgetItem(produc->value(0).toString()));
-             ui->invetario_tableWidget->setItem(fila,1,new QTableWidgetItem(produc->value(1).toString()));
-             ui->invetario_tableWidget->setItem(fila,2,new QTableWidgetItem(produc->value(2).toString()));
-             ui->invetario_tableWidget->setItem(fila,3,new QTableWidgetItem(produc->value(3).toString()));
-
-         }
-     }
+     llenarTabla();
 
 }
 
@@ -196,90 +202,46 @@ void Encargado::on_GuaPrbtn_clicked()
             QMessageBox info;
             info.setWindowTitle("Datos de Producto");
             info.setText("Se ha actualizado el producto.");
-            info.setStandardButtons(QMessageBox::Ok);
-            info.setButtonText(QMessageBox::Ok,"Aceptar");
+            info.addButton("Aceptar", QMessageBox::AcceptRole);
+            info.setIcon(QMessageBox::Information);
+            info.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
             info.exec();
 
             ui->paginas->setCurrentIndex(2);
-                    QSqlQuery *produc=new QSqlQuery;
-                    ui->invetario_tableWidget->clear();
-                    ui->invetario_tableWidget->setRowCount(0);
-                    QStringList titulos;
-                    titulos<<"IDProducto"<<"Nombre"<<"Descripcion"<<"Cantidad";
-                    ui->invetario_tableWidget->setColumnCount(4);
-                    ui->invetario_tableWidget->setHorizontalHeaderLabels(titulos);
-                    if(produc->prepare("SELECT idProducto,nombre_pr,descripcion_pr,cantidad  FROM inventario"))
-                    {
-                        produc->exec();
-                        int fila;
-                        while(produc->next()){
-                            ui->invetario_tableWidget->insertRow(ui->invetario_tableWidget->rowCount());
-                            fila = ui->invetario_tableWidget->rowCount()-1;
-                            ui->invetario_tableWidget->setItem(fila,0,new QTableWidgetItem(produc->value(0).toString()));
-                            ui->invetario_tableWidget->setItem(fila,1,new QTableWidgetItem(produc->value(1).toString()));
-                            ui->invetario_tableWidget->setItem(fila,2,new QTableWidgetItem(produc->value(2).toString()));
-                            ui->invetario_tableWidget->setItem(fila,3,new QTableWidgetItem(produc->value(3).toString()));
+            llenarTabla();
+            ui->nombre_2->clear();
+            ui->descripcion->clear();
+            ui->cantidad->clear();
+            fila=0;
+            id=0;
+            cont = 0;
+            ui->paginas->setCurrentIndex(2);
+        }
+    }else{
+        QSqlQuery agregarP(dbconexion);
+        QString nomp;
+        QString descripcion;
+        int canti;
 
-                    }
+        nomp=ui->nombre_2->text();
+        descripcion=ui->descripcion->text();
+        canti=ui->cantidad->text().toInt();
 
-                }
-                   ui->nombre_2->clear();
-                   ui->descripcion->clear();
-                   ui->cantidad->clear();
-                   fila=0;
-                   id=0;
-                   ui->paginas->setCurrentIndex(2);
+        agregarP.prepare("INSERT INTO inventario(nombre_pr,descripcion_pr,cantidad)""values('"+nomp+"','"+descripcion+"','"+QString::number(canti)+"');");
+        if(agregarP.exec())
+        {
+            QMessageBox info;
+            info.setWindowTitle("Datos de Producto");
+            info.setIcon(QMessageBox::Information);
+            info.setText("El producto ha sido agregado.");
+            info.setStandardButtons(QMessageBox::Ok);
+            info.setButtonText(QMessageBox::Ok,"Aceptar");
+            info.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
+            info.exec();
+            ui->paginas->setCurrentIndex(2);
+            llenarTabla();
         }
     }
-    else
-    {
-        QSqlQuery agregarP(dbconexion);
-            QString nomp;
-            QString descripcion;
-            int canti;
-
-            nomp=ui->nombre_2->text();
-            descripcion=ui->descripcion->text();
-            canti=ui->cantidad->text().toInt();
-
-            agregarP.prepare("INSERT INTO inventario(nombre_pr,descripcion_pr,cantidad)""values('"+nomp+"','"+descripcion+"','"+QString::number(canti)+"');");
-            if(agregarP.exec())
-            {
-                QMessageBox info;
-                info.setWindowTitle("Datos de Producto");
-                info.setText("El producto ha sido agregado.");
-                info.setStandardButtons(QMessageBox::Ok);
-                info.setButtonText(QMessageBox::Ok,"Aceptar");
-                info.exec();
-                ui->paginas->setCurrentIndex(2);
-                QSqlQuery *produc=new QSqlQuery;
-                ui->invetario_tableWidget->clear();
-                ui->invetario_tableWidget->setRowCount(0);
-                QStringList titulos;
-                titulos<<"IDProducto"<<"Nombre"<<"Descripcion"<<"Cantidad";
-                ui->invetario_tableWidget->setColumnCount(4);
-                ui->invetario_tableWidget->setHorizontalHeaderLabels(titulos);
-                if(produc->prepare("SELECT idProducto,nombre_pr,descripcion_pr,cantidad  FROM inventario"))
-                {
-                    produc->exec();
-                    int fila;
-                    while(produc->next()){
-                        ui->invetario_tableWidget->insertRow(ui->invetario_tableWidget->rowCount());
-                        fila = ui->invetario_tableWidget->rowCount()-1;
-                        ui->invetario_tableWidget->setItem(fila,0,new QTableWidgetItem(produc->value(0).toString()));
-                        ui->invetario_tableWidget->setItem(fila,1,new QTableWidgetItem(produc->value(1).toString()));
-                        ui->invetario_tableWidget->setItem(fila,2,new QTableWidgetItem(produc->value(2).toString()));
-                        ui->invetario_tableWidget->setItem(fila,3,new QTableWidgetItem(produc->value(3).toString()));
-
-                }
-            }
-            else{
-                qDebug()<<"no inserto";
-
-            }
-    }
-
-}
 }
 
 void Encargado::on_agregarPbtn_clicked()
@@ -296,12 +258,14 @@ void Encargado::on_eliminarPbtn_clicked()
     QSqlQuery eliminar(dbconexion);
 
     QMessageBox ask;
-    ask.setWindowTitle("\t\tAdvertencia");
-    ask.setText("El producto se va a eliminar");
+    ask.setWindowTitle("Advertencia");
+    ask.setText("¿Esta seguro de eliminar el producto?");
     ask.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
     ask.setDefaultButton(QMessageBox::Yes);
     ask.setButtonText(QMessageBox::Yes,"Aceptar");
     ask.setButtonText(QMessageBox::No,"Cancelar");
+    ask.setIcon(QMessageBox::Warning);
+    ask.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
 
     if(ask.exec()==QMessageBox::Yes){
 
@@ -309,34 +273,12 @@ void Encargado::on_eliminarPbtn_clicked()
 
             QMessageBox info;
             info.setWindowTitle("Datos de Prodcuto");
-            info.setText("Su producti ha sido eliminado de forma exitosa.");
+            info.setText("Su producto ha sido eliminado de forma exitosa.");
+            info.setIcon(QMessageBox::Information);
             info.setStandardButtons(QMessageBox::Ok);
             info.setButtonText(QMessageBox::Ok,"Aceptar");
             info.exec();
-            QSqlQuery *produc=new QSqlQuery;
-            ui->invetario_tableWidget->clear();
-            ui->invetario_tableWidget->setRowCount(0);
-            QStringList titulos;
-            titulos<<"IDProducto"<<"Nombre"<<"Descripcion"<<"Cantidad";
-            ui->invetario_tableWidget->setColumnCount(4);
-            ui->invetario_tableWidget->setHorizontalHeaderLabels(titulos);
-            if(produc->prepare("SELECT idProducto,nombre_pr,descripcion_pr,cantidad  FROM inventario"))
-            {
-                produc->exec();
-                int fila;
-                while(produc->next()){
-                    ui->invetario_tableWidget->insertRow(ui->invetario_tableWidget->rowCount());
-                    fila = ui->invetario_tableWidget->rowCount()-1;
-                    ui->invetario_tableWidget->setItem(fila,0,new QTableWidgetItem(produc->value(0).toString()));
-                    ui->invetario_tableWidget->setItem(fila,1,new QTableWidgetItem(produc->value(1).toString()));
-                    ui->invetario_tableWidget->setItem(fila,2,new QTableWidgetItem(produc->value(2).toString()));
-                    ui->invetario_tableWidget->setItem(fila,3,new QTableWidgetItem(produc->value(3).toString()));
-
-            }
-        }
-        else{
-            qDebug()<<"NO se eliminó nada";
+            llenarTabla();
         }
     }
-  }
 }

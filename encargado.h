@@ -24,6 +24,7 @@ public:
     ~Encargado();
 public slots:
     void reloj();
+    void llenarTabla();
 
 private slots:
     void on_btnSalir_clicked();
