@@ -24,6 +24,7 @@ public:
     ~Encargado();
 public slots:
     void reloj();
+    void llenarTabla();
 
 private slots:
     void on_btnSalir_clicked();
@@ -38,10 +39,23 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_btnInven_clicked();
+
+    void on_Actubtn_clicked();
+
+    void on_GuaPrbtn_clicked();
+
+    void on_agregarPbtn_clicked();
+
+    void on_eliminarPbtn_clicked();
+
 private:
     Ui::Encargado *ui;
     QTimer *timer;
     QSqlDatabase dbconexion;
+    int id;
+    int fila;
+    int cont;
 };
 
 #endif // ENCARGADO_H
