@@ -26,6 +26,7 @@ public slots:
 
 private slots:
     void on_btnSalir_clicked();
+    void on_btnMes_clicked();
 
     void on_btnMesa_clicked();
 
@@ -34,6 +35,8 @@ private slots:
     void agregarElementoMenu(int cantidad);
 
     void on_btnCobrar_clicked();
+
+    void on_cambiarMesa_clicked();
 
 private:
     Ui::Mesero *ui;

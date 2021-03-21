@@ -60,7 +60,6 @@ Mesero::Mesero(QWidget *parent) :
         }
 
     }
-
     ui->stackedWidget->setCurrentIndex(0);
 
     entradas();
@@ -393,3 +392,89 @@ void Mesero::on_btnCobrar_clicked()
 
     }
 }
+
+
+void Mesero::on_cambiarMesa_clicked()
+{
+    qDebug()<<"ENTRO 1-0";
+
+    ui->stackedWidget->setCurrentIndex(2);
+
+    QSqlQuery cargarMeseros(dbconexion);
+    QSqlQuery cargar(dbconexion);
+
+    int nRow2 = 0;
+
+    cargar.prepare("select mesero.idMesero,usuario.nombre,usuario.a_paterno,mesero.idZona from mesero inner join usuario on mesero.idMesero = usuario.idUsuario and mesero.idMesero != 3;");
+    cargar.exec();
+
+
+    if(cargar.exec()){
+        while (cargar.next()) {
+            QString nombre = cargar.value(1).toString()+" "+cargar.value(2).toString();
+            QString zona = cargar.value(3).toString();
+            QPushButton * btnMesa = new QPushButton;
+            btnMesa->setObjectName(zona);
+            btnMesa->setText(nombre);
+
+            btnMesa->setStyleSheet("QPushButton{border-radius: 20px; background-color: #D92B04; color: white; font: 12pt 'HelvLight'; width: 150px; height: 50px;} QPushButton:Hover{border: 3px solid #D92B04}");
+            ui->gridLayout_3->addWidget(btnMesa, nRow2, 0, Qt::AlignHCenter);
+            connect(btnMesa, SIGNAL(clicked()), SLOT(on_btnMes_clicked()));
+
+
+            nRow2++;
+        }
+
+    QSqlQuery cambiarMesero(dbconexion);
+    cambiarMesero.prepare("select idZona from mesa where idMesa = :idMesa");
+    cambiarMesero.bindValue(":idMesa",mesAct);
+
+}
+}
+void Mesero::on_btnMes_clicked(){
+    QPushButton * btnMes = dynamic_cast<QPushButton *>(sender());
+    QSqlQuery estadoMesa(dbconexion),estadoMesa1(dbconexion);
+    QString mesaactual;
+
+    if(btnMes){
+        QMessageBox conf;
+        conf.setText("Confirmar cambio de zona");
+        QAbstractButton * btnAcp = conf.addButton("Aceptar", QMessageBox::AcceptRole);
+        conf.addButton("Cancelar", QMessageBox::AcceptRole);
+        conf.setIcon(QMessageBox::Information);
+        conf.setWindowTitle("Confirmar movimiento");
+        conf.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
+        conf.exec();
+        if(conf.clickedButton() == btnAcp){
+            QSqlQuery cambiarMesero(dbconexion),obtenerIdMesa(dbconexion);
+            obtenerIdMesa.prepare("select idMesa from orden where idMesa=:mesa and idCajero is null;");
+            obtenerIdMesa.bindValue(":mesa",mesAct);
+
+            obtenerIdMesa.exec();
+            obtenerIdMesa.next();
+            mesaactual =obtenerIdMesa.value(0).toString();
+
+            qDebug()<<"la orden es"+mesaactual+"";
+            cambiarMesero.prepare("update mesa set idZona =:idZona where idMesa ="+mesaactual+";");
+            cambiarMesero.bindValue(":idZona",btnMes->objectName());
+            qDebug()<<btnMes->objectName()<<"Esta es la idMesa";
+            cambiarMesero.exec();
+            mesAct = 0;
+            ui->stackedWidget->setCurrentIndex(0);
+            ui->tablaOrden->clearContents();
+            ui->tablaOrden->model()->removeRows(0, ui->tablaOrden->rowCount());
+
+
+
+        }
+
+        }else
+        qDebug()<<"No ejecuto el query";
+        {
+
+
+        }
+
+        ui->stackedWidget->setCurrentIndex(0);
+    }
+
