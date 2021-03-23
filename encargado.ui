@@ -97,6 +97,19 @@
      </size>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>230</y>
+      <width>61</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Corte caja</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QWidget" name="menuH" native="true">
    <property name="geometry">
@@ -144,7 +157,7 @@ color: #F29F05;</string>
     <string notr="true"/>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="asignarZona">
     <property name="styleSheet">
@@ -153,93 +166,6 @@ color: #F29F05;</string>
 	image: url(:/imagenes/img/LogoFaded.png);
 }</string>
     </property>
-    <widget class="QWidget" name="ficha1" native="true">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>72</y>
-       <width>141</width>
-       <height>161</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#ficha1{
-	border-radius: 15px;
-	background-color: #A9BF04;
-}
-</string>
-     </property>
-     <widget class="QComboBox" name="zonaF1">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>130</y>
-        <width>121</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">#zonaF1{
-	background-color: white;
-	border-right: 2px solid #D96704;
-	border-bottom: 2px solid #D96704;
-	font: 10pt &quot;HelvLight&quot;;
-}</string>
-      </property>
-      <item>
-       <property name="text">
-        <string>Zona 1</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Zona 2</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Zona 3</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QPushButton" name="usrIcon1">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>10</y>
-        <width>101</width>
-        <height>101</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">#usrIcon1{
-	background: none;
-	border: none;
-	image: url(:/imagenes/img/usuario.png);
-}</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>100</y>
-        <width>61</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 12pt &quot;HelvLight&quot;;
-color: #D96704;</string>
-      </property>
-      <property name="text">
-       <string>mesero1</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
@@ -257,17 +183,160 @@ color: #D96704;</string>
       <string>Asignar zonas a meseros</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnGuardar">
+    <widget class="QWidget" name="ficha1" native="true">
      <property name="geometry">
       <rect>
-       <x>670</x>
-       <y>480</y>
-       <width>131</width>
-       <height>41</height>
+       <x>260</x>
+       <y>70</y>
+       <width>331</width>
+       <height>421</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">#btnGuardar{
+      <string notr="true">#ficha1{
+	border-radius: 15px;
+	border:3px solid #A9BF04;
+	background-color: white;
+}
+</string>
+     </property>
+     <widget class="QComboBox" name="cmbZona">
+      <property name="geometry">
+       <rect>
+        <x>111</x>
+        <y>225</y>
+        <width>61</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#zonaF1{
+	background-color: white;
+	border-right: 2px solid #D96704;
+	border-bottom: 2px solid #D96704;
+	font: 10pt &quot;HelvLight&quot;;
+}</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="usrIcon1">
+      <property name="geometry">
+       <rect>
+        <x>123</x>
+        <y>15</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#usrIcon1{
+	background: none;
+	border: none;
+	image: url(:/imagenes/img/usuario.png);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="nombreM">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>159</y>
+        <width>281</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 18pt &quot;HelvLight&quot;;
+color: black;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>122</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 16pt &quot;HelvLight&quot;;
+color: #D96704;
+</string>
+      </property>
+      <property name="text">
+       <string>Mesero:</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="cmbMeseros">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>120</y>
+        <width>61</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#zonaF1{
+	background-color: white;
+	border-right: 2px solid #D96704;
+	border-bottom: 2px solid #D96704;
+	font: 10pt &quot;HelvLight&quot;;
+}</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>52</x>
+        <y>230</y>
+        <width>61</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 16pt &quot;HelvLight&quot;;
+color: #D96704;
+</string>
+      </property>
+      <property name="text">
+       <string>Zona:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="nombreZ">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>269</y>
+        <width>281</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 18pt &quot;HelvLight&quot;;
+color: black;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnGuardar">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>350</y>
+        <width>131</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#btnGuardar{
 	background-color: #D96704;
 	border: none;
 	font: 16pt &quot;HelvLight&quot;;
@@ -277,10 +346,11 @@ color: #D96704;</string>
 #btnGuardar:Hover{
 	background-color: #A9BF04;
 }</string>
-     </property>
-     <property name="text">
-      <string>Guardar</string>
-     </property>
+      </property>
+      <property name="text">
+       <string>Guardar</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="pagina2">

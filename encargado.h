@@ -25,6 +25,7 @@ public:
 public slots:
     void reloj();
     void llenarTabla();
+    void llenarCombos();
 
 private slots:
     void on_btnSalir_clicked();
@@ -48,6 +49,10 @@ private slots:
     void on_agregarPbtn_clicked();
 
     void on_eliminarPbtn_clicked();
+
+    void on_cmbMeseros_currentTextChanged(const QString &arg1);
+
+    void on_cmbZona_currentTextChanged(const QString &arg1);
 
 private:
     Ui::Encargado *ui;

@@ -20,6 +20,7 @@ Encargado::Encargado(QWidget *parent) :
     ui->totales->setVisible(false);
     ui->caja1->setVisible(false);
     llenarTabla();
+    llenarCombos();
 }
 
 Encargado::~Encargado()
@@ -57,6 +58,20 @@ void Encargado::llenarTabla(){
     }
 }
 
+void Encargado::llenarCombos(){
+    QSqlQuery zonas(dbconexion);
+    QSqlQuery meseros(dbconexion);
+    zonas.exec("SELECT idZona FROM zona;");
+    while(zonas.next()){
+        ui->cmbZona->addItem(zonas.value(0).toString());
+    }
+
+    meseros.exec("SELECT idMesero FROM mesero;");
+    while(meseros.next()){
+        ui->cmbMeseros->addItem(meseros.value(0).toString());
+    }
+}
+
 void Encargado::on_btnSalir_clicked()
 {
     this->close();
@@ -64,20 +79,18 @@ void Encargado::on_btnSalir_clicked()
 
 void Encargado::on_btnGuardar_clicked()
 {
-    /*dbconexion.open();
-    QSqlQuery zona;
-    zona.prepare("UPDATE mesero SET idZona = :idZ WHERE idMesero = 1");
-    zona.bindValue(":idZ", ui->zonaF1->currentIndex());
-    if(zona.exec()){*/
+    QSqlQuery actZ(dbconexion);
+    actZ.prepare("UPDATE mesero SET idZona = :idZ WHERE idMesero = :idM;");
+    actZ.bindValue(":idZ", ui->cmbZona->currentText());
+    actZ.bindValue(":idM", ui->cmbMeseros->currentText());
+    if(actZ.exec()){
         QMessageBox mssg;
-        mssg.setText("Zonas actualizadas");
+        mssg.setText("Zona actualizada");
         mssg.setIcon(QMessageBox::Information);
+        mssg.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
         mssg.addButton(tr("Aceptar"),QMessageBox::YesRole);
         mssg.exec();
-    /*}else {
-        qDebug() << "Error en el query";
     }
-    dbconexion.close();*/
 }
 
 void Encargado::on_btnGestionUsr_clicked()
@@ -281,4 +294,20 @@ void Encargado::on_eliminarPbtn_clicked()
             llenarTabla();
         }
     }
+}
+
+void Encargado::on_cmbMeseros_currentTextChanged(const QString &arg1)
+{
+    QSqlQuery nombreM(dbconexion);
+    nombreM.exec("SELECT u.nombre, u.a_materno, u.a_paterno FROM usuario AS u INNER JOIN mesero AS m on u.idUsuario = m.idMesero WHERE m.idMesero = " + arg1 + ";");
+    nombreM.next();
+    ui->nombreM->setText(nombreM.value(0).toString() + " " + nombreM.value(1).toString() + " " + nombreM.value(2).toString());
+}
+
+void Encargado::on_cmbZona_currentTextChanged(const QString &arg1)
+{
+    QSqlQuery nombreZ(dbconexion);
+    nombreZ.exec("SELECT nombre FROM zona WHERE idZona = " + arg1 + ";");
+    nombreZ.next();
+    ui->nombreZ->setText(nombreZ.value(0).toString());
 }
