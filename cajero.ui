@@ -81,8 +81,13 @@ image: url(:/imagenes/img/recibirPedidos.png);</string>
       <height>61</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background: none;
+border: none;
+image: url(:/imagenes/img/ordenesListas.png);</string>
+    </property>
     <property name="text">
-     <string>PushButton</string>
+     <string/>
     </property>
    </widget>
   </widget>
@@ -129,7 +134,7 @@ color: #F29F05;</string>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="gridLayoutWidget">
@@ -298,7 +303,7 @@ color: #D96704;</string>
       <rect>
        <x>290</x>
        <y>0</y>
-       <width>241</width>
+       <width>251</width>
        <height>41</height>
       </rect>
      </property>
@@ -404,7 +409,7 @@ color: #D96704;</string>
       <item row="0" column="0">
        <widget class="QStackedWidget" name="stackedWidget_2">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page_4">
          <widget class="QGroupBox" name="groupBox_4">
@@ -509,7 +514,6 @@ color: #D96704;</string>
           </widget>
          </widget>
         </widget>
-        <widget class="QWidget" name="page_6"/>
         <widget class="QWidget" name="page_5">
          <widget class="QGroupBox" name="groupBox_3">
           <property name="geometry">

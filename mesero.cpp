@@ -478,3 +478,8 @@ void Mesero::on_btnMes_clicked(){
         ui->stackedWidget->setCurrentIndex(0);
     }
 
+
+void Mesero::on_btnCancelar_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}

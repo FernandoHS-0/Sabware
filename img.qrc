@@ -13,5 +13,11 @@
         <file>img/tarjeta-de-credito.png</file>
         <file>img/asignar_naranja.png</file>
         <file>img/inventario.png</file>
+        <file>img/cobrarFinal.png</file>
+        <file>img/corteCaja.png</file>
+        <file>img/inventarioF.png</file>
+        <file>img/asignarZonaF.png</file>
+        <file>img/modificarZonas.png</file>
+        <file>img/ordenesListas.png</file>
     </qresource>
 </RCC>

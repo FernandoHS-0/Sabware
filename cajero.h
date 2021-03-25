@@ -42,6 +42,10 @@ private slots:
 
     void on_pushButton_7_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_pushButton_4_clicked();
+
 private:
     Ui::Cajero *ui;
     QTimer *timer;

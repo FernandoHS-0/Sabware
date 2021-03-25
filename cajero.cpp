@@ -204,12 +204,12 @@ void Cajero::on_pushButton_5_clicked()
 
 void Cajero::on_radioButton_clicked()
 {
-    ui->stackedWidget_2->setCurrentIndex(2);
+    ui->stackedWidget_2->setCurrentIndex(1);
 }
 
 void Cajero::on_radioButton_2_clicked()
 {
-    ui->stackedWidget_2->setCurrentIndex(1);
+    ui->stackedWidget_2->setCurrentIndex(0);
 }
 
 void Cajero::on_pushButton_2_clicked()
@@ -227,6 +227,7 @@ void Cajero::on_pushButton_2_clicked()
         mssg.setWindowTitle("Pago exitoso");
         mssg.addButton(tr("Aceptar"),QMessageBox::YesRole);
         mssg.exec();
+        ui->stackedWidget->setCurrentIndex(2);
     }
     else {
         QMessageBox mssg;
@@ -254,6 +255,7 @@ void Cajero::on_pushButton_6_clicked()
         mssg.setWindowTitle("Pago exitoso");
         mssg.addButton(tr("Aceptar"),QMessageBox::YesRole);
         mssg.exec();
+        ui->stackedWidget->setCurrentIndex(2);
     }
     else {
         QMessageBox mssg;
@@ -267,6 +269,16 @@ void Cajero::on_pushButton_6_clicked()
 }
 
 void Cajero::on_pushButton_7_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+void Cajero::on_pushButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void Cajero::on_pushButton_4_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
 }

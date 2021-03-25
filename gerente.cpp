@@ -408,3 +408,8 @@ void Gerente::on_btnGestionUsr_2_clicked()
     ui->stackedWidget->setCurrentIndex(1);
 
 }
+
+void Gerente::on_btnGestionUsr_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}

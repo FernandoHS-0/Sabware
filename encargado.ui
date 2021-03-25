@@ -69,7 +69,7 @@
      <string notr="true">#btnAsigZ{
 	background: none;
 	border: none;
-	image: url(:/imagenes/img/asignarZona.png);
+	image: url(:/imagenes/img/asignarZonaF.png);
 }</string>
     </property>
     <property name="text">
@@ -80,15 +80,15 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>160</y>
+      <y>145</y>
       <width>71</width>
-      <height>51</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">#btnInven{	background: none;
 	border: none;
-	image: url(:/imagenes/img/inventario.png);}</string>
+	image: url(:/imagenes/img/inventarioF.png);}</string>
     </property>
     <property name="iconSize">
      <size>
@@ -100,14 +100,19 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>230</y>
-      <width>61</width>
-      <height>61</height>
+      <x>-12</x>
+      <y>220</y>
+      <width>81</width>
+      <height>81</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background: none;
+border: none;
+image: url(:/imagenes/img/corteCaja.png);</string>
+    </property>
     <property name="text">
-     <string>Corte caja</string>
+     <string/>
     </property>
    </widget>
   </widget>
@@ -157,7 +162,7 @@ color: #F29F05;</string>
     <string notr="true"/>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="asignarZona">
     <property name="styleSheet">
@@ -423,32 +428,7 @@ background-color: rgb(255, 255, 255);
       </property>
       <item>
        <property name="text">
-        <string>Cajero 1</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Cajero 2</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Cajero 3</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Cajero 4</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Cajero 5</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Cajero 6</string>
+        <string> </string>
        </property>
       </item>
      </widget>
@@ -532,18 +512,18 @@ color: #00007f;</string>
      <widget class="QLabel" name="label_6">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>220</y>
-        <width>91</width>
-        <height>31</height>
+        <x>50</x>
+        <y>160</y>
+        <width>201</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font: 15pt &quot;HelvLight&quot;;
+       <string notr="true">font: 12pt &quot;HelvLight&quot;;
 color: #00007f;</string>
       </property>
       <property name="text">
-       <string>USUARIO</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="zona">

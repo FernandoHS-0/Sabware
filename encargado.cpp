@@ -16,9 +16,6 @@ Encargado::Encargado(QWidget *parent) :
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(reloj()));
     timer->start(1000);
-    ui->usuario->setVisible(false);
-    ui->totales->setVisible(false);
-    ui->caja1->setVisible(false);
     llenarTabla();
     llenarCombos();
 }
@@ -61,6 +58,7 @@ void Encargado::llenarTabla(){
 void Encargado::llenarCombos(){
     QSqlQuery zonas(dbconexion);
     QSqlQuery meseros(dbconexion);
+    QSqlQuery cajeros(dbconexion);
     zonas.exec("SELECT idZona FROM zona;");
     while(zonas.next()){
         ui->cmbZona->addItem(zonas.value(0).toString());
@@ -69,6 +67,11 @@ void Encargado::llenarCombos(){
     meseros.exec("SELECT idMesero FROM mesero;");
     while(meseros.next()){
         ui->cmbMeseros->addItem(meseros.value(0).toString());
+    }
+
+    cajeros.exec("SELECT idCajero FROM cajero;");
+    while(cajeros.next()) {
+        ui->comboBox->addItem(cajeros.value(0).toString());
     }
 }
 
@@ -105,27 +108,14 @@ void Encargado::on_btnAsigZ_clicked()
 
 void Encargado::on_pushButton_clicked()
 {
-    int cajero = ui->comboBox->currentIndex()+1;
+    int cajero = ui->comboBox->currentText().toInt();
     qDebug()<<cajero;
-    ui->usuario->setVisible(true);
-    ui->caja1->setVisible(true);
-    ui->totales->setVisible(true);
     QSqlQuery datos;
     QSqlQuery tabla;
     QSqlQuery totales;
 
     datos.prepare("SELECT `idUsuario`,`nombre`,`a_materno`,`a_paterno` FROM `usuario` WHERE `idUsuario`='"+QString::number(cajero)+"'");
     datos.exec();
-    while (datos.next()) {
-        QString nombre, apellido1, apellido2, usuario;
-        nombre = datos.value(1).toString();
-        apellido1 = datos.value(3).toString();
-        apellido2 = datos.value(2).toString();
-        usuario = datos.value(0).toString();
-
-        ui->nombre->setText(nombre+" "+apellido1+" "+apellido2);
-        ui->zona->setText(usuario);
-    }
 
     ui->caja1->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->caja1->setRowCount(0);
@@ -310,4 +300,18 @@ void Encargado::on_cmbZona_currentTextChanged(const QString &arg1)
     nombreZ.exec("SELECT nombre FROM zona WHERE idZona = " + arg1 + ";");
     nombreZ.next();
     ui->nombreZ->setText(nombreZ.value(0).toString());
+}
+
+void Encargado::on_pushButton_3_clicked()
+{
+    ui->paginas->setCurrentIndex(1);
+}
+
+void Encargado::on_comboBox_currentTextChanged(const QString &arg1)
+{
+    QSqlQuery nombre(dbconexion);
+    nombre.exec("SELECT u.nombre, u.a_paterno, u.a_materno FROM usuario AS u INNER JOIN cajero AS c ON u.idUsuario = c.idCajero WHERE u.idUsuario = "+ arg1 +";");
+    while(nombre.next()){
+        ui->label_6->setText(nombre.value(0).toString() + " " + nombre.value(1).toString() + " " + nombre.value(2).toString());
+    }
 }

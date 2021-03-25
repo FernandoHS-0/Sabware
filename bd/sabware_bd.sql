@@ -40,8 +40,8 @@ VALUES((SELECT MAX(idUsuario) FROM USUARIO));
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AgregarUsuarioEncargado` (`Idusuario` INT, `Nombre` VARCHAR(45), `contrasenia` VARCHAR(45), `A_M` VARCHAR(45), `A_P` VARCHAR(45), `Direccion` VARCHAR(45), `Telefono` VARCHAR(45))  BEGIN
-INSERT INTO USUARIO(idUsuario,contrasenia,nombre,a_materno,a_paterno,direccion,telefono)
-VALUES(Idusuario,contrasenia,Nombre,A_M,A_P,Direccion,Telefono);
+INSERT INTO USUARIO(idUsuario,contrasenia,nombre,a_paterno,a_materno,direccion,telefono)
+VALUES(Idusuario,contrasenia,Nombre,A_P,A_M,Direccion,Telefono);
 INSERT INTO encargado(idEncargado)
 VALUES((SELECT MAX(idUsuario) FROM USUARIO));
 END$$

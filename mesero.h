@@ -38,6 +38,8 @@ private slots:
 
     void on_cambiarMesa_clicked();
 
+    void on_btnCancelar_clicked();
+
 private:
     Ui::Mesero *ui;
     QTimer *timer;
