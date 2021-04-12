@@ -23,6 +23,8 @@ void Inicio::on_pushButton_2_clicked()
     conexion.open();
     int usuario = ui->txtUsuairo->text().toInt(); QString contra = ui->txtPass->text();
     QSqlQuery log;
+    QSqlQuery insSes;
+    insSes.prepare("INSERT INTO sesion(sesAct) VALUES (:ses);");
 
     log.prepare("SELECT idUsuario, contrasenia FROM usuario WHERE idUsuario = :idU AND contrasenia = '"+contra+"';");
     log.bindValue(":idU", usuario);
@@ -86,6 +88,12 @@ void Inicio::on_pushButton_2_clicked()
         }
         if(resultadoMesero=="TRUE")
         {
+            insSes.bindValue(":ses",usuario);
+            if(insSes.exec()){
+                qDebug() << "Sesión iniciada: " << prueba.value(0).toInt();
+            }else {
+                qDebug() << "Error en el query";
+            }
             mes = new Mesero;
             mes->show();
             conexion=1;

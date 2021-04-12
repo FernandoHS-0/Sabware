@@ -44,7 +44,8 @@ private:
     Ui::Mesero *ui;
     QTimer *timer;
     QSqlDatabase dbconexion;
-    int mesAct;
+    int mesAct, meseroAct;
+
 };
 
 #endif // MESERO_H

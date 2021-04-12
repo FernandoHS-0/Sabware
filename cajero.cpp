@@ -47,7 +47,7 @@ Cajero::Cajero(QWidget *parent) :
     }
 
     QSqlQuery ordenesC(dbconexion);
-    ordenes.prepare("SELECT COUNT(`idOrden`) FROM `orden` WHERE `idCajero`=4 and estadoFiscal = 0");
+    ordenes.prepare("SELECT COUNT(`idOrden`) FROM `orden` WHERE `idCajero`= 1004 and estadoFiscal = 0");
     ordenes.exec();
     ordenes.next();
     int col1=0, fila1=0;
@@ -165,6 +165,7 @@ void Cajero::cobrarOrdenes(){
         while (qplato->next()) {
             numP.setNombre(qplato->value(0).toString());
             numP.setTotal(qplato->value(1).toString());
+            qDebug() << "Plato: " + numP.getNombre();
             noPlatos << numP;
         }
     }

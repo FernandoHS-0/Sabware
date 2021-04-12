@@ -115,7 +115,7 @@ color: #F29F05;</string>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="zona1">
     <widget class="QWidget" name="gridLayoutWidget">

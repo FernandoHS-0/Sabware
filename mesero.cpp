@@ -23,9 +23,16 @@ Mesero::Mesero(QWidget *parent) :
     }else{
         qDebug() << "Error en la conexion";
     }
+    QSqlQuery getMesero(dbconexion);
+    getMesero.exec("SELECT sesAct FROM sesion;");
+    getMesero.next();
+    meseroAct = getMesero.value(0).toInt();
+    qDebug() << "Mesero actual: " << meseroAct;
 
     QSqlQuery getZona(dbconexion);
-    getZona.exec("SELECT idZona FROM mesero WHERE idMesero = 3;");
+    getZona.prepare("SELECT idZona FROM mesero WHERE idMesero = :idM;");
+    getZona.bindValue(":idM", meseroAct);
+    getZona.exec();
     getZona.next();
     int zonaAct = getZona.value(0).toInt();
     qDebug() << "Zona: " << zonaAct;
@@ -175,6 +182,8 @@ void Mesero::bebidas(){
 
 void Mesero::on_btnSalir_clicked()
 {
+    QSqlQuery limpiar(dbconexion);
+    limpiar.exec("DELETE FROM sesion;");
     this->close();
 }
 
@@ -220,8 +229,9 @@ void Mesero::on_btnMesa_clicked(){
             }
         }else
         {
-            insertOrder.prepare("insert into orden(fecha,idMesero,idMesa)values(curdate(),3,:mesa);");
+            insertOrder.prepare("insert into orden(fecha,idMesero,idMesa)values(curdate(),:idMes,:mesa);");
             insertOrder.bindValue(":mesa",mesAct);
+            insertOrder.bindValue(":idMes",meseroAct);
             insertOrder.exec();
             qDebug()<<"insert orden";
 

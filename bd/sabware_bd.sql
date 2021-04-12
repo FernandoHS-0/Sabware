@@ -77,7 +77,7 @@ CREATE TABLE `cajero` (
 --
 
 INSERT INTO `cajero` (`idCajero`) VALUES
-(4);
+(1004), (1007);
 
 -- --------------------------------------------------------
 
@@ -117,13 +117,13 @@ CREATE TABLE `detalleorden` (
 -- Volcado de datos para la tabla `detalleorden`
 --
 
-INSERT INTO `detalleorden` (`cantidad`, `subtotal`, `idOrden`, `idPlatillo`) VALUES
+/* INSERT INTO `detalleorden` (`cantidad`, `subtotal`, `idOrden`, `idPlatillo`) VALUES
 (4, 80, 1, 3),
 (4, 80, 1, 2),
 (2, 40, 1, 5),
 (2, 40, 2, 3),
 (5, 100, 2, 1);
-
+*/
 -- --------------------------------------------------------
 
 --
@@ -173,7 +173,7 @@ CREATE TABLE `encargado` (
 --
 
 INSERT INTO `encargado` (`idEncargado`) VALUES
-(1);
+(1001);
 
 -- --------------------------------------------------------
 
@@ -201,7 +201,7 @@ CREATE TABLE `gerente` (
 --
 
 INSERT INTO `gerente` (`idGerente`) VALUES
-(2);
+(1002);
 
 -- --------------------------------------------------------
 
@@ -210,11 +210,24 @@ INSERT INTO `gerente` (`idGerente`) VALUES
 --
 
 CREATE TABLE `inventario` (
-  `idProducto` int(11) NOT NULL,
+  `idProducto` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `nombre_pr` varchar(45) NOT NULL,
   `descripcion_pr` text NOT NULL,
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `inventario`
+--
+
+INSERT INTO inventario (nombre_pr, descripcion_pr, cantidad) 
+VALUES ("Refresco retornable", "Reja de refrescos retornable de 600ml", 10),
+("Litro catsup", "Bote de litro de salsa catsup", 5),
+("Refresco vidrio", "Reja de refresco de vidrio de 600ml", 10),
+("Refresco lara", "Paquete de refresco de lata de 255ml", 10),
+("Limones", "Kilo de limones", 3),
+("Servilletas", "Paquete de servilletas de 100 piezas", 10),
+("Palillos", "Cajas de palillos de 100 piezas", 15);       
 
 -- --------------------------------------------------------
 
@@ -234,11 +247,11 @@ CREATE TABLE `mesa` (
 
 INSERT INTO `mesa` (`idMesa`, `estado`, `idZona`) VALUES
 (1, 'libre', 1),
+(2, 'libre', 1),
 (3, 'libre', 2),
+(4, 'libre', 2),
 (5, 'libre', 3),
-(6, 'libre', 2),
-(8, 'libre', 3),
-(9, 'libre', 1);
+(6, 'libre', 3);
 
 -- --------------------------------------------------------
 
@@ -256,8 +269,9 @@ CREATE TABLE `mesero` (
 --
 
 INSERT INTO `mesero` (`idMesero`, `idZona`) VALUES
-(3, 2),
-(202, 2);
+(1003, 2),
+(1005, 2),
+(1006, 1);
 
 -- --------------------------------------------------------
 
@@ -280,9 +294,9 @@ CREATE TABLE `orden` (
 -- Volcado de datos para la tabla `orden`
 --
 
-INSERT INTO `orden` (`idOrden`, `fecha`, `total`, `idMesero`, `idCajero`, `idMesa`, `estadoFiscal`, `estadoFisico`) VALUES
+/*INSERT INTO `orden` (`idOrden`, `fecha`, `total`, `idMesero`, `idCajero`, `idMesa`, `estadoFiscal`, `estadoFisico`) VALUES
 (1, '2021-02-25', NULL, 202, NULL, 1, 0, 1),
-(2, '2021-02-25', NULL, 202, NULL, 1, 0, 1);
+(2, '2021-02-25', NULL, 202, NULL, 1, 0, 1);*/
 
 -- --------------------------------------------------------
 
@@ -305,11 +319,13 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `contrasenia`, `nombre`, `a_materno`, `a_paterno`, `direccion`, `telefono`) VALUES
-(1, 'encargado1', 'Fernando', 'Hernandez', 'Sanchez', 'Av Madero 32', '2345674789'),
-(2, 'gerente1', 'Alberto', 'Martinez', 'Gonzalez', 'Ignacio Zaragoza 23', '2345213456'),
-(3, 'mesero1', 'Saul', 'Garcia', 'Sanchez', 'Polimeros 21', '2458975614'),
-(4, 'cajero1', 'Stephane', 'Perez', 'Perez', 'Indios verdes 9', '2484918619'),
-(202, '123', 'Saul', 'Garcia', 'Mendez', 'Enrique Segoviano', '23833851065');
+(1001, 'encargado1', 'Fernando', 'Hernandez', 'Sanchez', 'Av Madero 32', '2345674789'),
+(1002, 'gerente1', 'Alberto', 'Martinez', 'Gonzalez', 'Ignacio Zaragoza 23', '2345213456'),
+(1003, 'mesero1', 'Saul', 'Garcia', 'Sanchez', 'Polimeros 21', '2458975614'),
+(1004, 'cajero1', 'Stephane', 'Perez', 'Perez', 'Indios verdes 9', '2484918619'),
+(1005, 'mesero2', 'Oscar', 'Campos', 'Mejia', 'Revolucion 21', '222687582'),
+(1006, 'mesero3', 'Jorge', 'Lopez', 'Solis', 'Madrid 10', '2665895875'),
+(1007, 'cajero2', 'Valeria', 'Garcia', 'Bravo', 'Altavista 2', '3225687521');
 
 -- --------------------------------------------------------
 
@@ -328,10 +344,9 @@ CREATE TABLE `zona` (
 --
 
 INSERT INTO `zona` (`idZona`, `capacidad`, `nombre`) VALUES
-(1, 8, 'saul'),
-(2, 15, 'Pedro'),
-(3, 8, '+nombreZona+'),
-(4, 10, 'Jesus');
+(1, 10, 'Salon'),
+(2, 15, 'Jardin'),
+(3, 10, 'Terraza');
 
 --
 -- Índices para tablas volcadas
@@ -377,12 +392,6 @@ ALTER TABLE `encargado`
 ALTER TABLE `gerente`
   ADD PRIMARY KEY (`idGerente`),
   ADD KEY `fk_idUsuario` (`idGerente`);
-
---
--- Indices de la tabla `inventario`
---
-ALTER TABLE `inventario`
-  ADD PRIMARY KEY (`idProducto`);
 
 --
 -- Indices de la tabla `mesa`

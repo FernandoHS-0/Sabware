@@ -125,8 +125,8 @@ void Encargado::on_pushButton_clicked()
     ui->caja1->setColumnWidth(2,100);
     ui->caja1->setColumnCount(2);
     ui->caja1->setHorizontalHeaderLabels(titulos);
-    if(tabla.prepare("SELECT `idOrden`, `total` FROM `orden` WHERE `estadoFiscal`=1 AND `idCajero`='"+QString::number(cajero)+"'")){
-        tabla.exec();
+    tabla.prepare("SELECT `idOrden`, `total` FROM `orden` WHERE `estadoFiscal`=1 AND `idCajero`='"+QString::number(cajero)+"'");
+    if(tabla.exec()){
         while (tabla.next()) {
             ui->caja1->insertRow(ui->caja1->rowCount());
             int fila2 = ui->caja1->rowCount()-1;
@@ -150,7 +150,7 @@ void Encargado::on_pushButton_clicked()
 void Encargado::on_pushButton_2_clicked()
 {
     QMessageBox guardar;
-    guardar.setText("El producto ha sido añadido.");
+    guardar.setText("El corte de caja ha sido realizado.");
     guardar.setIcon(QMessageBox::Information);
     guardar.setWindowIcon(QIcon(":/imagenes/img/Logo.png"));
     guardar.addButton(tr("Aceptar"),QMessageBox::YesRole);
